@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ldjam 50"
-run/main_scene="res://src/Map1.tscn"
+run/main_scene="res://src/Map.tscn"
 config/icon="res://icon.png"
 
 [autoload]
