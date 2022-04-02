@@ -14,7 +14,7 @@
 [ext_resource path="res://src/Game.gd" type="Script" id=12]
 [ext_resource path="res://src/FollowNode.tscn" type="PackedScene" id=13]
 [ext_resource path="res://art/fort.png" type="Texture" id=14]
-[ext_resource path="res://src/Tower.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/Trash.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/Path.tscn" type="PackedScene" id=17]
 
 [node name="Game" type="Node2D"]
@@ -87,6 +87,10 @@ visible = false
 position = Vector2( -48, 40 )
 scale = Vector2( 0.15, 0.15 )
 
+[node name="Trash" parent="." instance=ExtResource( 15 )]
+position = Vector2( 964, 523 )
+scale = Vector2( 0.25, 0.27 )
+
 [node name="Bench" parent="." instance=ExtResource( 6 )]
 position = Vector2( 19, 478 )
 scale = Vector2( 0.2, 0.2 )
@@ -114,6 +118,3 @@ position = Vector2( 580, -1134 )
 position = Vector2( 227, 112 )
 scale = Vector2( 0.194237, 0.194237 )
 texture = ExtResource( 14 )
-
-[node name="Tower" parent="." instance=ExtResource( 16 )]
-position = Vector2( 761, 218 )

@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://art/trash.png" type="Texture" id=1]
+[ext_resource path="res://art/trash_closed.png" type="Texture" id=2]
+[ext_resource path="res://src/Trash.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 244, 248.5 )
+
+[node name="Trash" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Trash" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+
+[node name="TrashBtn" type="Button" parent="Trash"]
+margin_left = -192.0
+margin_top = -211.0
+margin_right = 294.0
+margin_bottom = 287.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 51, 37.5 )
+shape = SubResource( 1 )
+
+[connection signal="mouse_entered" from="Trash/TrashBtn" to="." method="_on_TrashBtn_mouse_entered"]
+[connection signal="mouse_exited" from="Trash/TrashBtn" to="." method="_on_TrashBtn_mouse_exited"]

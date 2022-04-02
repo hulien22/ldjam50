@@ -46,8 +46,10 @@ func _ready():
 	$Bench/Slot6/Slot6Btn.connect("pressed", self, "_on_bench_click", [5])
 	$Bench/Slot7/Slot7Btn.connect("pressed", self, "_on_bench_click", [6])
 	$Bench/Slot8/Slot8Btn.connect("pressed", self, "_on_bench_click", [7])
+	$Trash/Trash/TrashBtn.connect("pressed", self, "_on_trash_click")
 	
 	$FollowNode/PlaceBtn.connect("gui_input", self, "_on_placement_click")
+	
 	
 	Global.game_state = GLOBAL.GAME_STATE.PREPARING
 	
@@ -79,6 +81,7 @@ func combine_towers(active_nodes: Array, bench_nodes: Array, level: int) -> bool
 			if i != 0:
 				bench[bench_nodes[i]] = ""
 				$Bench.update_slot(bench_nodes[i])
+	#TODO animations?
 	return true
 
 func check_for_combines(name: String) -> bool:
@@ -111,11 +114,13 @@ func _on_shop_buy(i: int):
 		print("Trying to buy ", i)
 		# Buy and place in bench
 		if (shop_towers[i] != ""):
-			if (gold >= DB.towers.get(shop_towers[i] + "_1").tier):
+			var cost = DB.towers.get(shop_towers[i] + "_1").tier
+			if (gold >= cost):
 				# TODO check for triples before bench
 				if check_for_combines(shop_towers[i]):
 					shop_towers[i] = ""
 					shop.update_slot(i)
+					update_gold(-cost)
 					return
 				
 				# Check bench if space
@@ -126,6 +131,7 @@ func _on_shop_buy(i: int):
 						$Bench.update_slot(n, shop_towers[i], 1)
 						shop_towers[i] = ""
 						shop.update_slot(i)
+						update_gold(-cost)
 						return
 				print("no spots left")
 			else:
@@ -133,12 +139,15 @@ func _on_shop_buy(i: int):
 	
 func _on_refresh_btn():
 	if (shop.is_active()):
-		print("refreshing")
-		generate_shop()
+		if gold > 0:
+			update_gold(-1)
+			print("refreshing")
+			generate_shop()
 
 func _on_lock_btn():
 	if (shop.is_active()):
 		print("lock")
+		update_gold(10)
 
 func _on_upgrade_btn():
 	if (shop.is_active()):
@@ -272,6 +281,12 @@ func _on_active_click(node_name: String):
 		$FollowNode.update_entry(twr[0], int(twr[1]))
 		$FollowNode.show()
 
+func _on_trash_click():
+	print("trash", cur_carrying)
+	if (!cur_carrying.empty()):
+		update_gold(DB.towers.get(cur_carrying).tier)
+		clear_carrying()
+
 func clear_carrying():
 	$FollowNode.hide()
 	cur_carrying = ""
@@ -279,6 +294,11 @@ func clear_carrying():
 	if (need_to_dropdown):
 		shop.dropdown()
 	shop.get_node("aninode/BannerBtn").show()
+
+func update_gold(add_val: int):
+	gold += add_val
+	print(gold)
+	#TODO update displays
 
 #func _process(delta):
 #	if (Global.game_state == GLOBAL.GAME_STATE.COMBAT):
