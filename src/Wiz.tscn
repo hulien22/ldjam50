@@ -46,6 +46,7 @@ margin_right = 208.0
 margin_bottom = 106.0
 
 [node name="Body" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 1 )
 frames = SubResource( 1 )
 animation = "wiz"
 frame = 1
@@ -53,6 +54,7 @@ frame = 1
 [node name="Arms" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "wizarms"
+frame = 1
 
 [node name="Level" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 0, 1 )

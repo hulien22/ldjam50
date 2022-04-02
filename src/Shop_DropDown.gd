@@ -51,6 +51,6 @@ func dropdown():
 
 
 func update_slot(i: int, name: String = "", tier: int = 0):
-	slots[i].update_entry(name)
+	slots[i].update_entry(name, 1, tier)
 	#TODO add tier to value here
 
