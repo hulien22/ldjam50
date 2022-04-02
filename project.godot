@@ -8,10 +8,36 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "CastleDB",
+"language": "GDScript",
+"path": "res://addons/thejustinwalsh.castledb/castledb_types.gd"
+}, {
+"base": "Node2D",
+"class": "Tower",
+"language": "GDScript",
+"path": "res://src/Tower.gd"
+} ]
+_global_script_class_icons={
+"CastleDB": "",
+"Tower": ""
+}
+
 [application]
 
 config/name="Ldjam 50"
+run/main_scene="res://src/Map1.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Global.gd"
+DB="*res://db/DB.cdb"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/thejustinwalsh.castledb/plugin.cfg" )
 
 [physics]
 
@@ -19,4 +45,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0.180392, 0.180392, 0.180392, 1 )
 environment/default_environment="res://default_env.tres"
