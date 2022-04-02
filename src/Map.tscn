@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://art/temp_map.png" type="Texture" id=1]
 [ext_resource path="res://art/board.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://src/FollowNode.tscn" type="PackedScene" id=13]
 [ext_resource path="res://art/fort.png" type="Texture" id=14]
 [ext_resource path="res://art/path.png" type="Texture" id=15]
+[ext_resource path="res://src/Tower.tscn" type="PackedScene" id=16]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 12 )
@@ -35,6 +36,11 @@ texture = ExtResource( 1 )
 position = Vector2( 512, 300 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
+
+[node name="Path" type="Sprite" parent="Node2D"]
+position = Vector2( 502, 286 )
+scale = Vector2( 0.6, 0.5 )
+texture = ExtResource( 15 )
 
 [node name="Splitbg" type="Sprite" parent="Node2D"]
 visible = false
@@ -67,6 +73,8 @@ color = Color( 0.541176, 0.541176, 0.541176, 1 )
 visible = false
 position = Vector2( 574, -736 )
 
+[node name="EntitiesSort" type="YSort" parent="."]
+
 [node name="FollowNode" parent="." instance=ExtResource( 13 )]
 visible = false
 position = Vector2( -48, 40 )
@@ -95,12 +103,10 @@ scale = Vector2( 0.55, 0.55 )
 visible = false
 position = Vector2( 580, -1134 )
 
-[node name="Path" type="Sprite" parent="."]
-position = Vector2( 502, 286 )
-scale = Vector2( 0.6, 0.5 )
-texture = ExtResource( 15 )
-
 [node name="Fort" type="Sprite" parent="."]
 position = Vector2( 227, 112 )
 scale = Vector2( 0.194237, 0.194237 )
 texture = ExtResource( 14 )
+
+[node name="Tower" parent="." instance=ExtResource( 16 )]
+position = Vector2( 761, 218 )

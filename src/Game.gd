@@ -13,7 +13,7 @@ var gold: int = 4
 var health: int = 100
 var wave: int = 1
 var bench: Array = ["", "", "", "", "", "", "", ""]
-var active_towers: Array
+var active_towers: Dictionary = {}
 var shop_towers: Array = ["", "", ""]
 
 var cur_carrying: String = ""
@@ -47,6 +47,7 @@ func _ready():
 	$Bench/Slot7/Slot7Btn.connect("pressed", self, "_on_bench_click", [6])
 	$Bench/Slot8/Slot8Btn.connect("pressed", self, "_on_bench_click", [7])
 	
+	$FollowNode/PlaceBtn.connect("gui_input", self, "_on_placement_click")
 	
 #	var ntower = tower_scene.instance()
 #	ntower.set_name("Tower")
@@ -116,12 +117,105 @@ func _on_bench_click(n: int):
 				$Bench.update_slot(n, twr[0], int(twr[1]))
 				twr = bench[old_n].split("_")
 				$Bench.update_slot(old_n, twr[0], int(twr[1]))
+		elif (last_location.begins_with("ACTIVE_")):
+			var twr = cur_carrying.split("_")
+			if (bench[n].empty()):
+				bench[n] = cur_carrying
+				$Bench.update_slot(n, twr[0], int(twr[1]))
+			else:
+				var old_posn = str2var("Vector2" + last_location.split("_")[1]) as Vector2
+				
+				var temp = bench[n]
+				bench[n] = cur_carrying
+				$Bench.update_slot(n, twr[0], int(twr[1]))
+				
+				twr = temp.split("_")
+				var node_name = "Tower_" + str(old_posn)
+				var ntower = tower_scene.instance()
+				ntower.set_name(node_name)
+				ntower.set_val(twr[0], int(twr[1]))
+				ntower.position = old_posn
+				ntower.scale *= 0.15
+				ntower.get_node("SelectBtn").connect("pressed", self, "_on_active_click", [node_name])
+				active_towers[node_name] = ntower
+				$EntitiesSort.add_child(ntower)
+			
+			
 		else:
-			#TODO FROM ACTIVE
-			pass
-		$FollowNode.hide()
-		cur_carrying = ""
-		last_location = ""
-		if (need_to_dropdown):
-			shop.dropdown()
-		shop.get_node("aninode/BannerBtn").show()
+			print("unknown last location: ", last_location)
+		reset_carrying()
+
+func _on_placement_click(event):
+	var is_place: bool = true
+	if event is InputEventMouseButton and event.pressed:
+		match event.button_index:
+			BUTTON_LEFT:
+				is_place = true
+			BUTTON_RIGHT:
+				is_place = false
+			_:
+				print("test",event.button_index)
+				return
+	else:
+		return
+
+	if (is_place):
+		var posn = $FollowNode.is_valid_location()
+		if (posn != $FollowNode.INVALID):
+			print("posn", posn)
+			var twr = cur_carrying.split("_")
+			var node_name = "Tower_" + str(posn)
+			var ntower = tower_scene.instance()
+			ntower.set_name(node_name)
+			ntower.set_val(twr[0], int(twr[1]))
+			ntower.position = posn
+			ntower.scale *= 0.15
+			ntower.get_node("SelectBtn").connect("pressed", self, "_on_active_click", [node_name])
+			active_towers[node_name] = ntower
+			$EntitiesSort.add_child(ntower)
+			
+			reset_carrying()
+	else:
+		# return to last location
+		if (last_location.begins_with("BENCH_")):
+			# SWAP
+			var twr = cur_carrying.split("_")
+			var old_n = int(last_location.substr(6,1))
+			bench[old_n] = cur_carrying
+			$Bench.update_slot(old_n, twr[0], int(twr[1]))
+		elif (last_location.begins_with("ACTIVE_")):
+			var old_posn = str2var("Vector2" + last_location.split("_")[1]) as Vector2
+			var twr = cur_carrying.split("_")
+			var node_name = "Tower_" + str(old_posn)
+			var ntower = tower_scene.instance()
+			ntower.set_name(node_name)
+			ntower.set_val(twr[0], int(twr[1]))
+			ntower.position = old_posn
+			ntower.scale *= 0.15
+			ntower.get_node("SelectBtn").connect("pressed", self, "_on_active_click", [node_name])
+			active_towers[node_name] = ntower
+			$EntitiesSort.add_child(ntower)
+		
+		reset_carrying()
+
+
+func _on_active_click(node_name: String):
+	var old_posn = active_towers[node_name].position
+	cur_carrying = active_towers[node_name].name_ + "_" + str(active_towers[node_name].level_)
+	last_location = "ACTIVE_" + str(old_posn)
+	$EntitiesSort.remove_child(active_towers[node_name])
+	active_towers.erase(node_name)
+	#str2var("Vector2" + cords) as Vector2
+	need_to_dropdown = shop.pullback()
+	shop.get_node("aninode/BannerBtn").hide()
+	var twr = cur_carrying.split("_")
+	$FollowNode.update_entry(twr[0], int(twr[1]))
+	$FollowNode.show()
+
+func reset_carrying():
+	$FollowNode.hide()
+	cur_carrying = ""
+	last_location = ""
+	if (need_to_dropdown):
+		shop.dropdown()
+	shop.get_node("aninode/BannerBtn").show()
