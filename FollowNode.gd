@@ -19,12 +19,12 @@ func update_entry(name: String, lvl: int = 1):
 		$Wiz.hide()
 	else:
 		var row = DB.towers.get(name + "_" + str(lvl))
-		$Wiz.update_color(ColorN(row.facecolor), ColorN(row.bodycolor), ColorN(row.armcolor), false)
+		$Wiz.update_color(ColorN(row.facecolor), ColorN(row.bodycolor), ColorN(row.armcolor), true)
 		$Wiz.set_level(lvl - 1)
 		$Wiz.show()
 
 func is_valid_location() -> Vector2:
-	if ($Area2D.get_overlapping_areas().empty()):
+	if (Global.game_state == GLOBAL.GAME_STATE.PREPARING && $Area2D.get_overlapping_areas().empty()):
 		return position
 	else:
 		return INVALID

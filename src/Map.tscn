@@ -14,11 +14,16 @@
 [ext_resource path="res://src/Game.gd" type="Script" id=12]
 [ext_resource path="res://src/FollowNode.tscn" type="PackedScene" id=13]
 [ext_resource path="res://art/fort.png" type="Texture" id=14]
-[ext_resource path="res://art/path.png" type="Texture" id=15]
 [ext_resource path="res://src/Tower.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/Path.tscn" type="PackedScene" id=17]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 12 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+position = Vector2( 0, 2 )
+color = Color( 0.541176, 0.541176, 0.541176, 1 )
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -36,11 +41,6 @@ texture = ExtResource( 1 )
 position = Vector2( 512, 300 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 10 )
-
-[node name="Path" type="Sprite" parent="Node2D"]
-position = Vector2( 502, 286 )
-scale = Vector2( 0.6, 0.5 )
-texture = ExtResource( 15 )
 
 [node name="Splitbg" type="Sprite" parent="Node2D"]
 visible = false
@@ -64,16 +64,23 @@ texture = ExtResource( 2 )
 position = Vector2( 1318, -212 )
 scale = Vector2( 0.2, 0.2 )
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
-position = Vector2( 0, 2 )
-color = Color( 0.541176, 0.541176, 0.541176, 1 )
+[node name="Path" parent="." instance=ExtResource( 17 )]
 
 [node name="Shop" parent="." instance=ExtResource( 4 )]
 visible = false
 position = Vector2( 574, -736 )
 
 [node name="EntitiesSort" type="YSort" parent="."]
+
+[node name="Combat" type="Node2D" parent="."]
+visible = false
+
+[node name="Button" type="Button" parent="Combat"]
+margin_right = 1024.0
+margin_bottom = 601.0
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
 
 [node name="FollowNode" parent="." instance=ExtResource( 13 )]
 visible = false

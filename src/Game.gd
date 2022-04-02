@@ -49,27 +49,87 @@ func _ready():
 	
 	$FollowNode/PlaceBtn.connect("gui_input", self, "_on_placement_click")
 	
+	Global.game_state = GLOBAL.GAME_STATE.PREPARING
+	
 #	var ntower = tower_scene.instance()
 #	ntower.set_name("Tower")
 #	ntower.set_val("Evoker", 1)
 #	ntower.position = Vector2(200,200)
 #	add_child(ntower)
 
+func combine_towers(active_nodes: Array, bench_nodes: Array, level: int) -> bool:
+	if active_nodes.size() + bench_nodes.size() != level:
+		return false
+	if !active_nodes.empty():
+		var name = active_towers[active_nodes[0]].name_
+		active_towers[active_nodes[0]].set_val(name, level)
+		# remove other nodes
+		for i in active_nodes.size():
+			if i != 0:
+				$EntitiesSort.remove_child(active_towers[active_nodes[i]])
+				active_towers.erase(active_nodes[i])
+		for i in bench_nodes.size():
+			bench[bench_nodes[i]] = ""
+			$Bench.update_slot(bench_nodes[i])
+	else:
+		var twr = bench[bench_nodes[0]].split("_")
+		bench[bench_nodes[0]] = twr[0] + "_" + str(level)
+		$Bench.update_slot(bench_nodes[0], twr[0], level)
+		for i in bench_nodes.size():
+			if i != 0:
+				bench[bench_nodes[i]] = ""
+				$Bench.update_slot(bench_nodes[i])
+	return true
+
+func check_for_combines(name: String) -> bool:
+	# first check for tier 1s
+	var active_nodes = []
+	var bench_nodes = []
+	for t in active_towers:
+		if active_towers[t].name_ == name && active_towers[t].level_ == 1:
+			active_nodes.append(t)
+	for n in bench.size():
+		if bench[n] == name + "_1":
+			bench_nodes.append(n)
+	if !combine_towers(active_nodes, bench_nodes, 2):
+		return false
+	# now check for tier twos
+	active_nodes.clear()
+	bench_nodes.clear()
+	for t in active_towers:
+		if active_towers[t].name_ == name && active_towers[t].level_ == 2:
+			active_nodes.append(t)
+	for n in bench.size():
+		if bench[n] == name + "_2":
+			bench_nodes.append(n)
+	combine_towers(active_nodes, bench_nodes, 3)
+	# Return true regardless as we did combine something
+	return true
+
 func _on_shop_buy(i: int):
 	if (shop.is_active()):
 		print("Trying to buy ", i)
 		# Buy and place in bench
 		if (shop_towers[i] != ""):
-			# TODO check for triples before bench
-			for n in bench.size():
-				if (bench[n] == ""):
-					#TODO GOLD
-					bench[n] = shop_towers[i] + "_1"
-					$Bench.update_slot(n, shop_towers[i], 1)
+			if (gold >= DB.towers.get(shop_towers[i] + "_1").tier):
+				# TODO check for triples before bench
+				if check_for_combines(shop_towers[i]):
 					shop_towers[i] = ""
 					shop.update_slot(i)
 					return
-			print("no spots left")
+				
+				# Check bench if space
+				for n in bench.size():
+					if (bench[n] == ""):
+						#TODO GOLD
+						bench[n] = shop_towers[i] + "_1"
+						$Bench.update_slot(n, shop_towers[i], 1)
+						shop_towers[i] = ""
+						shop.update_slot(i)
+						return
+				print("no spots left")
+			else:
+				print("not enough gold")
 	
 func _on_refresh_btn():
 	if (shop.is_active()):
@@ -143,7 +203,7 @@ func _on_bench_click(n: int):
 			
 		else:
 			print("unknown last location: ", last_location)
-		reset_carrying()
+		clear_carrying()
 
 func _on_placement_click(event):
 	var is_place: bool = true
@@ -162,7 +222,7 @@ func _on_placement_click(event):
 	if (is_place):
 		var posn = $FollowNode.is_valid_location()
 		if (posn != $FollowNode.INVALID):
-			print("posn", posn)
+			print("posn", posn, " | ", cur_carrying)
 			var twr = cur_carrying.split("_")
 			var node_name = "Tower_" + str(posn)
 			var ntower = tower_scene.instance()
@@ -174,7 +234,7 @@ func _on_placement_click(event):
 			active_towers[node_name] = ntower
 			$EntitiesSort.add_child(ntower)
 			
-			reset_carrying()
+			clear_carrying()
 	else:
 		# return to last location
 		if (last_location.begins_with("BENCH_")):
@@ -196,26 +256,32 @@ func _on_placement_click(event):
 			active_towers[node_name] = ntower
 			$EntitiesSort.add_child(ntower)
 		
-		reset_carrying()
-
+		clear_carrying()
 
 func _on_active_click(node_name: String):
-	var old_posn = active_towers[node_name].position
-	cur_carrying = active_towers[node_name].name_ + "_" + str(active_towers[node_name].level_)
-	last_location = "ACTIVE_" + str(old_posn)
-	$EntitiesSort.remove_child(active_towers[node_name])
-	active_towers.erase(node_name)
-	#str2var("Vector2" + cords) as Vector2
-	need_to_dropdown = shop.pullback()
-	shop.get_node("aninode/BannerBtn").hide()
-	var twr = cur_carrying.split("_")
-	$FollowNode.update_entry(twr[0], int(twr[1]))
-	$FollowNode.show()
+	if (Global.game_state == GLOBAL.GAME_STATE.PREPARING):
+		var old_posn = active_towers[node_name].position
+		cur_carrying = active_towers[node_name].name_ + "_" + str(active_towers[node_name].level_)
+		last_location = "ACTIVE_" + str(old_posn)
+		$EntitiesSort.remove_child(active_towers[node_name])
+		active_towers.erase(node_name)
+		#str2var("Vector2" + cords) as Vector2
+		need_to_dropdown = shop.pullback()
+		shop.get_node("aninode/BannerBtn").hide()
+		var twr = cur_carrying.split("_")
+		$FollowNode.update_entry(twr[0], int(twr[1]))
+		$FollowNode.show()
 
-func reset_carrying():
+func clear_carrying():
 	$FollowNode.hide()
 	cur_carrying = ""
 	last_location = ""
 	if (need_to_dropdown):
 		shop.dropdown()
 	shop.get_node("aninode/BannerBtn").show()
+
+#func _process(delta):
+#	if (Global.game_state == GLOBAL.GAME_STATE.COMBAT):
+#		$Combat.show()
+#	else:
+#		$Combat.hide()

@@ -31,9 +31,8 @@
 					"display": null
 				},
 				{
-					"typeStr": "5:SELF_CIRCLE,SELF_SQUARE,CIRCLE,LINE,BUFF",
-					"name": "atktyp",
-					"display": null
+					"typeStr": "5:SELF_CIRCLE,SELF_SQUARE,CIRCLE,LINE,BUFF,SINGLE_TARGET,SELF",
+					"name": "atktyp"
 				},
 				{
 					"typeStr": "4",
@@ -137,7 +136,7 @@
 				{
 					"name": "Lightning_1",
 					"tier": 1,
-					"description": "",
+					"description": "Line attack",
 					"atkspd": 0,
 					"atkdmg": 0,
 					"atkrng": 0,
@@ -172,6 +171,58 @@
 					"facecolor": "gold",
 					"bodycolor": "gold",
 					"armcolor": "gold"
+				},
+				{
+					"name": "Arcanist_1",
+					"tier": 1,
+					"description": "Single target snipe",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 5,
+					"atktypsz": 0,
+					"facecolor": "dodgerblue",
+					"bodycolor": "dodgerblue",
+					"armcolor": "dodgerblue"
+				},
+				{
+					"name": "Bank_1",
+					"tier": 1,
+					"description": "Gains money at end",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 6,
+					"atktypsz": 0,
+					"facecolor": "limegreen",
+					"bodycolor": "limegreen",
+					"armcolor": "limegreen"
+				},
+				{
+					"name": "Garviturgist_1",
+					"tier": 1,
+					"description": "Knocksback",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 5,
+					"atktypsz": 0,
+					"facecolor": "rebeccapurple",
+					"bodycolor": "rebeccapurple",
+					"armcolor": "rebeccapurple"
+				},
+				{
+					"name": "Poisoner_1",
+					"tier": 1,
+					"description": "DOT single target",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 0,
+					"atktypsz": 0,
+					"facecolor": "hotpink",
+					"bodycolor": "hotpink",
+					"armcolor": "hotpink"
 				}
 			],
 			"separators": [],

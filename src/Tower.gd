@@ -16,6 +16,7 @@ func set_val(name: String, level: int):
 func update_sprite():
 	#$Wiz.set_animation_speed(10.0 / row_.atkspd)
 	$Wiz.update_color(ColorN(row_.facecolor), ColorN(row_.bodycolor), ColorN(row_.armcolor), true)
+	$Wiz.set_level(level_ - 1)
 
 
 
