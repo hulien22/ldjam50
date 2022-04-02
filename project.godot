@@ -15,12 +15,18 @@ _global_script_classes=[ {
 "path": "res://addons/thejustinwalsh.castledb/castledb_types.gd"
 }, {
 "base": "Node2D",
+"class": "Shop",
+"language": "GDScript",
+"path": "res://src/Shop_DropDown.gd"
+}, {
+"base": "Node2D",
 "class": "Tower",
 "language": "GDScript",
 "path": "res://src/Tower.gd"
 } ]
 _global_script_class_icons={
 "CastleDB": "",
+"Shop": "",
 "Tower": ""
 }
 
