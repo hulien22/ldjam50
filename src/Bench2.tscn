@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/Slot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://art/default_bg.png" type="Texture" id=2]
+[ext_resource path="res://SketchMeFreeVersion-qxyl.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://art/bench.png" type="Texture" id=4]
+[ext_resource path="res://art/banner.png" type="Texture" id=5]
+
+[sub_resource type="StreamTexture" id=4]
+flags = 4
+load_path = "res://.import/banner.png-d356da24130dac7094e2719feec70411.stex"
+
+[sub_resource type="DynamicFont" id=3]
+size = 400
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 3 )
+
+[node name="Bench" type="Node2D"]
+position = Vector2( 4, -2 )
+
+[node name="DefaultBg" type="Sprite" parent="."]
+visible = false
+position = Vector2( 2494, -916 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 2 )
+
+[node name="Bench" type="Sprite" parent="."]
+self_modulate = Color( 0.901961, 0.901961, 0.901961, 1 )
+position = Vector2( 1114, 655 )
+scale = Vector2( 1.4, 2.3 )
+texture = ExtResource( 4 )
+
+[node name="Banner" type="Sprite" parent="."]
+self_modulate = Color( 0.901961, 0.901961, 0.901961, 1 )
+position = Vector2( 1543, -1119 )
+scale = Vector2( 3.05, 2.018 )
+texture = ExtResource( 5 )
+offset = Vector2( -136.066, 1208.13 )
+
+[node name="Banner2" type="Sprite" parent="."]
+position = Vector2( 1111, 539 )
+rotation = -0.0129324
+scale = Vector2( 3, -13.461 )
+texture = SubResource( 4 )
+region_enabled = true
+region_rect = Rect2( 31.5358, -1.12846, 329.034, 89.6248 )
+
+[node name="Slot1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 264, 274 )
+rotation = 0.0290018
+
+[node name="Slot2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 798, 302 )
+rotation = -0.0327219
+
+[node name="Slot3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1326, 254 )
+rotation = 0.0328359
+
+[node name="Slot4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1890, 269 )
+rotation = 0.0119037
+
+[node name="Slot5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 247, 835 )
+rotation = -0.0376323
+
+[node name="Slot6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 826, 807 )
+rotation = -0.0271746
+
+[node name="Slot7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1362, 810 )
+rotation = 0.0683036
+
+[node name="Slot8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1952, 829 )
+rotation = -0.0275379
+
+[node name="Slot9" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 1377, 1352 )
+rotation = 0.046976
+
+[node name="Label" type="Label" parent="."]
+margin_left = 888.0
+margin_top = 1175.0
+margin_right = 1686.0
+margin_bottom = 1593.0
+rect_rotation = -1.75967
+rect_scale = Vector2( 0.628347, 0.415481 )
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "BENCH"

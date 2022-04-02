@@ -1,0 +1,183 @@
+{
+	"sheets": [
+		{
+			"name": "towers",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name"
+				},
+				{
+					"typeStr": "3",
+					"name": "tier",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "description"
+				},
+				{
+					"typeStr": "4",
+					"name": "atkspd",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "atkdmg"
+				},
+				{
+					"typeStr": "4",
+					"name": "atkrng",
+					"display": null
+				},
+				{
+					"typeStr": "5:SELF_CIRCLE,SELF_SQUARE,CIRCLE,LINE,BUFF",
+					"name": "atktyp",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "atktypsz",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "facecolor",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "bodycolor",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "armcolor"
+				}
+			],
+			"lines": [
+				{
+					"name": "Evoker_1",
+					"tier": 1,
+					"atkspd": 5,
+					"atkdmg": 10,
+					"atkrng": 10,
+					"atktyp": 2,
+					"atktypsz": 3,
+					"description": "Throws a fireball that explodes",
+					"armcolor": "crimson",
+					"facecolor": "crimson",
+					"bodycolor": "crimson"
+				},
+				{
+					"name": "Evoker_2",
+					"tier": 1,
+					"atkspd": 4,
+					"atkdmg": 20,
+					"atkrng": 10,
+					"atktyp": 2,
+					"atktypsz": 5,
+					"description": "",
+					"armcolor": "crimson",
+					"facecolor": "crimson",
+					"bodycolor": "crimson"
+				},
+				{
+					"name": "Evoker_3",
+					"tier": 1,
+					"description": "",
+					"atkspd": 3,
+					"atkdmg": 50,
+					"atkrng": 10,
+					"atktyp": 2,
+					"atktypsz": 8,
+					"armcolor": "crimson",
+					"facecolor": "crimson",
+					"bodycolor": "crimson"
+				},
+				{
+					"name": "Frost_1",
+					"tier": 1,
+					"atkspd": 6,
+					"atkdmg": 5,
+					"atkrng": 5,
+					"atktyp": 0,
+					"atktypsz": 5,
+					"description": "Damages and slows enemies around",
+					"armcolor": "cyan",
+					"facecolor": "cyan",
+					"bodycolor": "cyan"
+				},
+				{
+					"name": "Frost_2",
+					"tier": 1,
+					"description": "",
+					"atkspd": 5,
+					"atkdmg": 10,
+					"atkrng": 5,
+					"atktyp": 0,
+					"atktypsz": 5,
+					"facecolor": "cyan",
+					"bodycolor": "cyan",
+					"armcolor": "cyan"
+				},
+				{
+					"name": "Frost_3",
+					"tier": 1,
+					"description": "",
+					"atkspd": 4,
+					"atkdmg": 25,
+					"atkrng": 5,
+					"atktyp": 0,
+					"atktypsz": 5,
+					"facecolor": "cyan",
+					"bodycolor": "cyan",
+					"armcolor": "cyan"
+				},
+				{
+					"name": "Lightning_1",
+					"tier": 1,
+					"description": "",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 3,
+					"atktypsz": 0,
+					"facecolor": "gold",
+					"bodycolor": "gold",
+					"armcolor": "gold"
+				},
+				{
+					"name": "Lightning_2",
+					"tier": 1,
+					"description": "",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 3,
+					"atktypsz": 0,
+					"facecolor": "gold",
+					"bodycolor": "gold",
+					"armcolor": "gold"
+				},
+				{
+					"name": "Lightning_3",
+					"tier": 1,
+					"description": "",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 3,
+					"atktypsz": 0,
+					"facecolor": "gold",
+					"bodycolor": "gold",
+					"armcolor": "gold"
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

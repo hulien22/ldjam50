@@ -1,0 +1,66 @@
+{
+	"sheets": [
+		{
+			"name": "ldjam50",
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "name"
+				},
+				{
+					"typeStr": "3",
+					"name": "tier",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "atkspd",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "atkdmg"
+				},
+				{
+					"typeStr": "4",
+					"name": "atkrng",
+					"display": null
+				},
+				{
+					"typeStr": "5:SELF_CIRCLE,SELF_SQUARE,CIRCLE,LINE,BUFF",
+					"name": "atktyp",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "atktypsz",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "Evoker",
+					"tier": 1,
+					"atkspd": 5,
+					"atkdmg": 10,
+					"atkrng": 10,
+					"atktyp": 2,
+					"atktypsz": 3
+				},
+				{
+					"name": "",
+					"tier": 0,
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 0,
+					"atktypsz": 0
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

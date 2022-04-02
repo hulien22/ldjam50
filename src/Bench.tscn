@@ -1,0 +1,125 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Slot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Bench.gd" type="Script" id=2]
+
+[node name="Bench" type="Node2D"]
+position = Vector2( 2, -2 )
+script = ExtResource( 2 )
+
+[node name="Slot1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 264, 274 )
+rotation = 0.0290018
+
+[node name="Slot1Btn" type="Button" parent="Slot1"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 798, 302 )
+rotation = -0.0327219
+
+[node name="Slot2Btn" type="Button" parent="Slot2"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1326, 254 )
+rotation = 0.0328359
+
+[node name="Slot3Btn" type="Button" parent="Slot3"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1858, 300 )
+rotation = 0.0119037
+
+[node name="Slot4Btn" type="Button" parent="Slot4"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 2423, 286 )
+rotation = -0.0376323
+
+[node name="Slot5Btn" type="Button" parent="Slot5"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 3002, 258 )
+rotation = -0.0271746
+
+[node name="Slot6Btn" type="Button" parent="Slot6"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 3585, 253 )
+rotation = 0.0683036
+
+[node name="Slot7Btn" type="Button" parent="Slot7"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 4169, 255 )
+rotation = -0.0275379
+
+[node name="Slot8Btn" type="Button" parent="Slot8"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot9" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 4721, 271 )
+rotation = 0.046976

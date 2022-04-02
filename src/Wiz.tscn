@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://art/wiz2.png" type="Texture" id=1]
+[ext_resource path="res://art/wiz1.png" type="Texture" id=2]
+[ext_resource path="res://art/wizarms1.png" type="Texture" id=3]
+[ext_resource path="res://art/wizarms2.png" type="Texture" id=4]
+[ext_resource path="res://src/Wiz.gd" type="Script" id=5]
+[ext_resource path="res://art/level3.png" type="Texture" id=6]
+[ext_resource path="res://art/level2.png" type="Texture" id=7]
+[ext_resource path="res://art/level1.png" type="Texture" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "wizarms",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "wiz",
+"speed": 1.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="wiz" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Face" type="ColorRect" parent="."]
+margin_left = -101.0
+margin_top = -60.0
+margin_right = 115.0
+margin_bottom = -11.0
+
+[node name="ColorRect2" type="ColorRect" parent="Face"]
+margin_left = 8.0
+margin_top = 46.0
+margin_right = 208.0
+margin_bottom = 106.0
+
+[node name="Body" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "wiz"
+frame = 1
+
+[node name="Arms" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "wizarms"
+
+[node name="Level" type="AnimatedSprite" parent="."]
+modulate = Color( 1, 1, 0, 1 )
+position = Vector2( 3, -142 )
+frames = SubResource( 2 )

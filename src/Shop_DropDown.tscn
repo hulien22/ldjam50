@@ -1,0 +1,224 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://art/lock_open.png" type="Texture" id=1]
+[ext_resource path="res://art/refresh.png" type="Texture" id=2]
+[ext_resource path="res://art/upgrade.png" type="Texture" id=3]
+[ext_resource path="res://src/Slot.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/SketchFont.tres" type="Theme" id=5]
+[ext_resource path="res://art/board2.png" type="Texture" id=6]
+[ext_resource path="res://art/chains.png" type="Texture" id=7]
+[ext_resource path="res://art/banner.png" type="Texture" id=8]
+[ext_resource path="res://src/Shop_DropDown.gd" type="Script" id=9]
+[ext_resource path="res://art/lock_closed.png" type="Texture" id=10]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("aninode:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "ShopDropdown"
+tracks/0/type = "value"
+tracks/0/path = NodePath("aninode:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.7, 0.9, 1 ),
+"transitions": PoolRealArray( 2, 0.5, 2, 0.5, 2, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 595.333 ), Vector2( 0, 356 ), Vector2( 0, 461 ), Vector2( 0, 429 ), Vector2( 0, 461 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "ShopDropdownFast"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("aninode:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 461 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "ShopReturn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("aninode:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 461 ), Vector2( 0, 0 ) ]
+}
+
+[node name="Shop" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="aninode" type="Node2D" parent="."]
+
+[node name="Banner" type="Sprite" parent="aninode"]
+position = Vector2( 471, 562 )
+texture = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="aninode"]
+margin_left = 379.0
+margin_top = 501.0
+margin_right = 705.0
+margin_bottom = 710.0
+rect_rotation = -1.75967
+rect_scale = Vector2( 0.628347, 0.415481 )
+theme = ExtResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "SHOP"
+
+[node name="Board" type="Sprite" parent="aninode"]
+position = Vector2( 470, 305 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 6 )
+
+[node name="Chains" type="Sprite" parent="aninode"]
+position = Vector2( 148, -26 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 7 )
+
+[node name="Chains2" type="Sprite" parent="aninode"]
+position = Vector2( 765, -25 )
+rotation = 3.06315
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 7 )
+
+[node name="Slot1" parent="aninode" instance=ExtResource( 4 )]
+position = Vector2( 156, 307 )
+rotation = -0.0524141
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Slot1Btn" type="Button" parent="aninode/Slot1"]
+margin_left = -238.0
+margin_top = -254.0
+margin_right = 240.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot2" parent="aninode" instance=ExtResource( 4 )]
+position = Vector2( 420, 325 )
+rotation = 0.0294679
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Slot2Btn" type="Button" parent="aninode/Slot2"]
+margin_left = -236.0
+margin_top = -254.0
+margin_right = 242.0
+margin_bottom = 224.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Slot3" parent="aninode" instance=ExtResource( 4 )]
+position = Vector2( 686, 308 )
+rotation = -0.0395511
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Slot3Btn" type="Button" parent="aninode/Slot3"]
+margin_left = -236.0
+margin_top = -246.0
+margin_right = 242.0
+margin_bottom = 232.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Lock" type="AnimatedSprite" parent="aninode"]
+position = Vector2( 891, 205 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 5 )
+
+[node name="LockBtn" type="Button" parent="aninode/Lock"]
+margin_left = -94.0
+margin_top = -94.0
+margin_right = 94.0
+margin_bottom = 88.0
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Refresh" type="Sprite" parent="aninode"]
+position = Vector2( 890, 316 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="RefreshBtn" type="Button" parent="aninode/Refresh"]
+margin_left = -94.0
+margin_top = -98.0
+margin_right = 102.0
+margin_bottom = 94.0
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="Upgrade" type="Sprite" parent="aninode"]
+position = Vector2( 893, 424 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="UpgradeBtn" type="Button" parent="aninode/Upgrade"]
+margin_left = -92.0
+margin_top = -88.0
+margin_right = 96.0
+margin_bottom = 94.0
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="BannerBtn" type="Button" parent="aninode"]
+margin_left = 307.0
+margin_top = 488.0
+margin_right = 645.0
+margin_bottom = 652.0
+rect_pivot_offset = Vector2( -717, -91 )
+focus_mode = 0
+enabled_focus_mode = 0
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/ShopDropdown = SubResource( 2 )
+anims/ShopDropdownFast = SubResource( 4 )
+anims/ShopReturn = SubResource( 3 )
+
+[connection signal="pressed" from="aninode/BannerBtn" to="." method="_on_BannerBtn_pressed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
