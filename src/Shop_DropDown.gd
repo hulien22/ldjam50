@@ -32,20 +32,22 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		down = true
 	else:
 		# active is already false
+		active = false
 		down = false
 
 func is_active():
 	return active
 
-#TODO verify these two?
 func pullback() -> bool:
-	if (!animating && down || !down):
-		_on_BannerBtn_pressed()
+	if ((animating && !down) || (!animating && down)):
+		$AnimationPlayer.clear_queue()
+		$AnimationPlayer.queue("ShopReturn")
 		return true
 	return false
 
 func dropdown():
-	_on_BannerBtn_pressed()
+	$AnimationPlayer.clear_queue()
+	$AnimationPlayer.queue("ShopDropdownFast")
 
 
 func update_slot(i: int, name: String = "", tier: int = 0):
