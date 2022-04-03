@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Wiz.tscn" type="PackedScene" id=1]
+[ext_resource path="res://art/default_bg.png" type="Texture" id=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="DefaultBg" type="Sprite" parent="."]
+position = Vector2( 514, 301 )
+texture = ExtResource( 2 )
+
+[node name="wiz" parent="." instance=ExtResource( 1 )]
+position = Vector2( 510, 286 )

@@ -34,6 +34,7 @@ animations = [ {
 script = ExtResource( 5 )
 
 [node name="Face" type="ColorRect" parent="."]
+modulate = Color( 0.317647, 0.827451, 0.384314, 1 )
 margin_left = -101.0
 margin_top = -60.0
 margin_right = 115.0
@@ -46,12 +47,14 @@ margin_right = 208.0
 margin_bottom = 106.0
 
 [node name="Body" type="AnimatedSprite" parent="."]
+modulate = Color( 0.0509804, 0.298039, 0.498039, 1 )
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
 animation = "wiz"
 frame = 1
 
 [node name="Arms" type="AnimatedSprite" parent="."]
+modulate = Color( 0.780392, 0.772549, 0.168627, 1 )
 frames = SubResource( 1 )
 animation = "wizarms"
 frame = 1
