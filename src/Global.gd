@@ -10,3 +10,5 @@ var game_state = GAME_STATE.PREPARING
 #	emit_signal()
 
 var tower_label: Control = null
+
+enum BUFF {DMG, SPEED, RANGE}

@@ -9,6 +9,9 @@ const aoe_scene = preload("res://src/AOE.tscn")
 var name_: String
 var level_: int
 var row_ # : DB.Towers.TowersRow
+var atkdmg: float
+var atkspd: float
+var atkrng: float
 
 # ctor
 func set_val(name: String, level: int):
@@ -18,6 +21,10 @@ func set_val(name: String, level: int):
 	var detect_circle = CircleShape2D.new()
 	detect_circle.radius = row_.atkrng * 250 # MAGIC NUMBERS :D
 	$DetectArea/Circle.shape = detect_circle
+	if row_.atktyp == DB.towers.Atktyp.BUFF_RNG || row_.atktyp == DB.towers.Atktyp.BUFF_SPD || row_.atktyp == DB.towers.Atktyp.BUFF_DMG:
+		$DetectArea.collision_mask = 0
+	else:
+		$DetectArea.collision_layer = 0
 	if row_.atkspd > 0:
 		$FireTimer.wait_time = row_.atkspd
 	update_sprite()
@@ -28,6 +35,7 @@ func update_sprite():
 	$Wiz.set_level(level_ - 1)
 
 func start_combat():
+	update_stats()
 	$Wiz.set_animation_frame(0)
 	# If atkspd is 0, then we only do stuff on round end.
 	if row_.atkspd > 0:
@@ -78,11 +86,39 @@ func shoot(target: Mob):
 		DB.towers.Atktyp.SINGLE_TARGET:
 			# Just deal damage directly for single target
 			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0, ColorN(row_.facecolor), self.global_position)
+			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, 0, ColorN(row_.facecolor), self.global_position)
 			call_deferred("add_child", aoe)
 			target.on_hit(row_.atkdmg)
-		_:
+		_:  # else send the damage 
 			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
+			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
 			call_deferred("add_child", aoe)
+
+func update_stats():
+	atkdmg = row_.atkdmg
+	atkspd = row_.atkspd
+	atkrng = row_.atkrng
+	var nodes = $BuffArea.get_overlapping_areas()
+	print(nodes)
+	for n in nodes:
+		match n.get_parent().row_.atktyp:
+			DB.towers.Atktyp.BUFF_RNG:
+				atkrng *= n.get_parent().row_.atkdmg
+			DB.towers.Atktyp.BUFF_DMG:
+				atkdmg *= n.get_parent().row_.atkdmg
+			DB.towers.Atktyp.BUFF_SPD:
+				atkspd *= n.get_parent().row_.atkdmg
+	#TODO global buffs
 	
+	$DetectArea/Circle.shape.radius = atkrng * 250
+	if atkspd > 0:
+		$FireTimer.wait_time = atkspd
+
+
+func _on_SelectBtn_mouse_entered():
+	update_stats()
+	$Whitecircle.scale = Vector2(1,1) * atkrng
+	$Whitecircle.show()
+
+func _on_SelectBtn_mouse_exited():
+	$Whitecircle.hide()

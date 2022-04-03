@@ -45,6 +45,24 @@ func _ready():
 			var col_shp = CollisionShape2D.new()
 			col_shp.shape = detect_circle
 			$DetectArea.add_child(col_shp)
+		DB.towers.Atktyp.SELF_CIRCLE:
+			$AnimNode/Circle.scale *= size
+			global_position = source
+			$AnimNode/Circle.show()
+			var detect_circle = CircleShape2D.new()
+			detect_circle.radius = size * 250
+			var col_shp = CollisionShape2D.new()
+			col_shp.shape = detect_circle
+			$DetectArea.add_child(col_shp)
+		DB.towers.Atktyp.SELF_SQUARE:
+			$AnimNode/Square.scale *= size
+			global_position = source
+			$AnimNode/Square.show()
+			var detect_rect = RectangleShape2D.new()
+			detect_rect.extents = Vector2(1,1) * size
+			var col_shp = CollisionShape2D.new()
+			col_shp.shape = detect_rect
+			$DetectArea.add_child(col_shp)
 		DB.towers.Atktyp.LINE:
 			var detect_rect = RectangleShape2D.new()
 			detect_rect.extents = Vector2(1,125) * size
