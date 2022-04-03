@@ -53,12 +53,12 @@ func on_hit(damage: float = 0, knockback: float = 0, slowdown: float = 0, poison
 		add_child(tmr)
 		tmr.connect("timeout", self, "_deal_poison", [poison])
 		tmr.one_shot = true
-		tmr.start(1)
+		tmr.start(0.6)
 	return false
 
 func _deal_poison(dmg: float):
 	flash_color(ColorN("hotpink"))
-	on_hit(dmg, 0, 0, dmg - 1)
+	on_hit(dmg, 0, 0, dmg - Global.poison_sub)
 
 func _speed_up(v: float):
 	cur_speed = min(speed, cur_speed / v)

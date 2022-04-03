@@ -12,6 +12,7 @@ var row_ # : DB.Towers.TowersRow
 var atkdmg: float
 var atkspd: float
 var atkrng: float
+var atktypsz: float
 var knockback: float
 var slowdown: float
 var poison: float
@@ -69,7 +70,7 @@ func try_shoot(area = null):
 	if (target == null):
 		$DetectArea.connect("area_entered", self, "try_shoot")
 	else:
-		shoot(target)
+		shoot(target, Global.gold_shots)
 		$Wiz.play_once()
 		$FireTimer.start()
 
@@ -85,26 +86,46 @@ func has_enemy_to_shoot() -> Mob:
 			max_offset = nodes[i].get_parent().get_path_progress()
 	return nodes[max_i].get_parent()
 
-func shoot(target: Mob):
+func shoot(target: Mob, goldshots: int = 0):
 	match row_.atktyp:
 		DB.towers.Atktyp.SINGLE_TARGET:
 			# Just deal damage directly for single target
 			var aoe = aoe_scene.instance()
-			aoe.set_values(self, row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, 0, ColorN(row_.facecolor), knockback, slowdown, poison)
+			aoe.set_values(self, row_.atktyp, atkdmg, atktypsz, target.global_position, self.global_position, 0, ColorN(row_.facecolor), knockback, slowdown, poison)
 			call_deferred("add_child", aoe)
 			if target.on_hit(row_.atkdmg, knockback, slowdown, poison):
 				on_kill()
 		_:  # else send the damage 
 			if name_ == "Mercenary":
 				atkdmg = game.gold
+				
+			if row_.facecolor == "dodgerblue" || row_.bodycolor == "dodgerblue":
+				if Generator.rng.randi() % 100 < Global.crit_chance:
+					atkdmg *= 3.0
+			
 			var aoe = aoe_scene.instance()
-			aoe.set_values(self, row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, row_.delay, ColorN(row_.facecolor), knockback, slowdown, poison)
+			aoe.set_values(self, row_.atktyp, atkdmg, atktypsz, target.global_position, self.global_position, row_.delay, ColorN(row_.facecolor), knockback, slowdown, poison)
 			call_deferred("add_child", aoe)
+	
+	if row_.facecolor == "gold" || row_.bodycolor == "gold":
+		if goldshots > 0:
+			var tmr = Timer.new()
+			add_child(tmr)
+			tmr.connect("timeout", self, "gold_shoot", [goldshots-1])
+			tmr.one_shot = true
+			tmr.start(0.1)
+
+func gold_shoot(goldshots: int = 0):
+	var target = has_enemy_to_shoot()
+	if (target != null):
+		shoot(target, goldshots - 1)
+		$Wiz.play_once()
 
 func update_stats():
-	atkdmg = row_.atkdmg
-	atkspd = row_.atkspd
+	atkdmg = row_.atkdmg * Global.global_dmg_percent
+	atkspd = row_.atkspd * Global.global_spd_percent
 	atkrng = row_.atkrng
+	atktypsz = row_.atktypsz
 	knockback = row_.knockback
 	slowdown = row_.slowdown
 	poison = row_.poison
@@ -119,6 +140,13 @@ func update_stats():
 				atkspd *= n.get_parent().row_.atkdmg
 	#TODO global buffs
 	
+	if row_.facecolor == "crimson" || row_.bodycolor == "crimson":
+		atktypsz *= Global.red_aoe_size
+	if row_.facecolor == "cyan" || row_.bodycolor == "cyan":
+		slowdown *= Global.slowdown_percent
+	if row_.facecolor == "rebeccapurple" || row_.bodycolor == "rebeccapurple":
+		knockback *= Global.knockback_percent
+
 	$DetectArea/Circle.shape.radius = atkrng * 250
 	if atkspd > 0:
 		$FireTimer.wait_time = atkspd * 0.5

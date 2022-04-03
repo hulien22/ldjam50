@@ -22,3 +22,13 @@ func hide_tower_label():
 	tower_label.hide()
 
 enum BUFF {DMG, SPEED, RANGE}
+
+var red_aoe_size = 1.0
+var gold_shots = 0
+var slowdown_percent = 1.0
+var knockback_percent = 1.0
+var global_dmg_percent = 1.0
+var global_spd_percent = 1.0
+var interest_max = 25
+var poison_sub = 1.0
+var crit_chance = 0

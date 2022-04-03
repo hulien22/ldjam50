@@ -464,6 +464,7 @@ func _on_play_click():
 
 func start_round():
 	Global.game_state = Global.GAME_STATE.COMBAT
+	get_active_properties()
 	shop.pullback()
 	$Play.hide()
 	$FastForwards.show()
@@ -475,7 +476,7 @@ func end_round():
 	Global.game_state = Global.GAME_STATE.PREPARING
 	# gain gold
 	var g_level = min(wave, 5)
-	var g_interest = min(gold, 25) / 5
+	var g_interest = min(gold, Global.interest_max) / 5
 	update_gold(g_level + g_interest)
 	# gain xp
 	increment_xp(4)
@@ -489,3 +490,112 @@ func end_round():
 	$Play.show()
 	for t in active_towers:
 		active_towers[t].stop_combat()
+
+func get_active_properties():
+	var unique = {}
+	for k in active_towers:
+		var n = active_towers[k].name_
+		unique[n] = active_towers[k].row_
+	var counts = {}
+	for k in unique:
+		var c1 = unique[k].facecolor
+		var c2 = unique[k].bodycolor
+		if (counts.has(c1)):
+			counts[c1] += 1
+		else:
+			counts[c1] += 1
+		if (c1 != c2):
+			if (counts.has(c2)):
+				counts[c2] += 1
+			else:
+				counts[c2] += 1
+	if (counts.has("white")):
+		for k in counts:
+			counts[k] += 1
+	
+	if (counts.has("crimson") && counts["crimson"] >= 2):
+		if counts["crimson"] >= 6:
+			Global.red_aoe_size = 2.0
+		elif counts["crimson"] >= 4:
+			Global.red_aoe_size = 1.5
+		else:
+			Global.red_aoe_size = 1.25
+	else:
+		Global.red_aoe_size = 1.0
+	
+	if (counts.has("gold") && counts["gold"] >= 2):
+		if counts["gold"] >= 6:
+			Global.gold_shots = 3
+		elif counts["gold"] >= 4:
+			Global.gold_shots = 2
+		else:
+			Global.gold_shots = 1
+	else:
+		Global.gold_shots = 0
+		
+	if (counts.has("cyan") && counts["cyan"] >= 2):
+		if counts["cyan"] >= 6:
+			Global.slowdown_percent = 0.6
+		elif counts["cyan"] >= 4:
+			Global.slowdown_percent = 0.7
+		else:
+			Global.slowdown_percent = 0.8
+	else:
+		Global.slowdown_percent = 1.0
+	
+	if (counts.has("rebeccapurple") && counts["rebeccapurple"] >= 2):
+		if counts["rebeccapurple"] >= 6:
+			Global.knockback_percent = 1.3
+		elif counts["rebeccapurple"] >= 4:
+			Global.knockback_percent = 1.2
+		else:
+			Global.knockback_percent = 1.1
+	else:
+		Global.knockback_percent = 1.0
+		
+	if (counts.has("darkorange") && counts["darkorange"] >= 2):
+		if counts["darkorange"] >= 6:
+			Global.global_dmg_percent = 1.5
+			Global.global_spd_percent = 0.75
+		elif counts["darkorange"] >= 4:
+			Global.global_dmg_percent = 1.2
+			Global.global_spd_percent = 0.8
+		else:
+			Global.global_dmg_percent = 1.0
+			Global.global_spd_percent = 0.9
+	else:
+		Global.global_dmg_percent = 1.0
+		Global.global_spd_percent = 1.0
+	
+	if (counts.has("limegreen") && counts["limegreen"] >= 2):
+		if counts["limegreen"] >= 6:
+			Global.interest_max = 1000
+		elif counts["limegreen"] >= 4:
+			Global.interest_max = 100
+		else:
+			Global.interest_max = 50
+	else:
+		Global.interest_max = 25
+
+	if (counts.has("hotpink") && counts["hotpink"] >= 2):
+		if counts["hotpink"] >= 6:
+			Global.poison_sub = 0.4
+		elif counts["hotpink"] >= 4:
+			Global.poison_sub = 0.6
+		else:
+			Global.poison_sub = 0.8
+	else:
+		Global.poison_sub = 1.0
+		
+	if (counts.has("dodgerblue") && counts["dodgerblue"] >= 2):
+		if counts["dodgerblue"] >= 6:
+			Global.crit_chance = 20
+		elif counts["dodgerblue"] >= 4:
+			Global.crit_chance = 10
+		else:
+			Global.crit_chance = 5
+	else:
+		Global.crit_chance = 0
+	
+	
+	
