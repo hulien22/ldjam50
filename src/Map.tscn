@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://art/temp_map.png" type="Texture" id=1]
 [ext_resource path="res://art/board.png" type="Texture" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://src/Play.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/Path.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/GameInfo.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/LevelInfo.tscn" type="PackedScene" id=19]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 12 )
@@ -72,6 +73,11 @@ position = Vector2( 574, -736 )
 
 [node name="Path" parent="." instance=ExtResource( 17 )]
 
+[node name="Fort" type="Sprite" parent="."]
+position = Vector2( 227, 112 )
+scale = Vector2( 0.194237, 0.194237 )
+texture = ExtResource( 14 )
+
 [node name="EntitiesSort" type="YSort" parent="."]
 
 [node name="Combat" type="Node2D" parent="."]
@@ -85,7 +91,7 @@ enabled_focus_mode = 0
 flat = true
 
 [node name="Play" parent="." instance=ExtResource( 16 )]
-position = Vector2( 978, 40 )
+position = Vector2( 984, 42 )
 scale = Vector2( 0.1, 0.1 )
 
 [node name="FollowNode" parent="." instance=ExtResource( 13 )]
@@ -105,6 +111,11 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( 7, 8 )
 scale = Vector2( 0.6, 0.6 )
 
+[node name="LevelInfo" parent="." instance=ExtResource( 19 )]
+modulate = Color( 0.764706, 0.764706, 0.764706, 1 )
+position = Vector2( 769, 8 )
+scale = Vector2( 0.844629, 0.863538 )
+
 [node name="Bench2" parent="." instance=ExtResource( 7 )]
 visible = false
 position = Vector2( 1312, -668 )
@@ -123,9 +134,3 @@ scale = Vector2( 0.55, 0.55 )
 [node name="Shop3" parent="." instance=ExtResource( 11 )]
 visible = false
 position = Vector2( 580, -1134 )
-
-[node name="Fort" type="Sprite" parent="."]
-visible = false
-position = Vector2( 227, 112 )
-scale = Vector2( 0.194237, 0.194237 )
-texture = ExtResource( 14 )

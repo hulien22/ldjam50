@@ -1,0 +1,78 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/SketchFont.tres" type="Theme" id=1]
+[ext_resource path="res://src/LevelInfo.gd" type="Script" id=2]
+
+[node name="LevelInfo" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="WaveLbl" type="Label" parent="."]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 728.0
+margin_bottom = 210.0
+rect_scale = Vector2( 0.298558, 0.219048 )
+theme = ExtResource( 1 )
+text = "Wave 1"
+align = 2
+clip_text = true
+
+[node name="LevelLbl" type="Label" parent="."]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+margin_left = 3.0
+margin_top = 47.0
+margin_right = 593.0
+margin_bottom = 256.0
+rect_scale = Vector2( 0.167366, 0.122794 )
+theme = ExtResource( 1 )
+text = "Level 2"
+align = 2
+clip_text = true
+
+[node name="Slash" type="Label" parent="."]
+modulate = Color( 0.333333, 0.333333, 0.333333, 1 )
+margin_left = 188.0
+margin_top = 34.0
+margin_right = 282.0
+margin_bottom = 243.0
+rect_rotation = 23.7786
+rect_scale = Vector2( 0.307987, 0.266927 )
+theme = ExtResource( 1 )
+text = "I"
+clip_text = true
+
+[node name="XpLbl" type="Label" parent="."]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+margin_left = 138.0
+margin_top = 45.0
+margin_right = 376.0
+margin_bottom = 266.0
+rect_scale = Vector2( 0.163681, 0.135495 )
+theme = ExtResource( 1 )
+text = "0"
+align = 1
+clip_text = true
+
+[node name="XP" type="Label" parent="."]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+margin_left = 112.0
+margin_top = 45.0
+margin_right = 308.0
+margin_bottom = 259.0
+rect_scale = Vector2( 0.163681, 0.135495 )
+theme = ExtResource( 1 )
+text = "XP"
+clip_text = true
+
+[node name="XpLbl2" type="Label" parent="."]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+margin_left = 185.0
+margin_top = 44.0
+margin_right = 423.0
+margin_bottom = 265.0
+rect_scale = Vector2( 0.163681, 0.135495 )
+theme = ExtResource( 1 )
+text = "10"
+align = 1
+clip_text = true

@@ -22,6 +22,9 @@ func set_values(shp, dmg: float, sz: float, tgt: Vector2, tmr_timeout: float, cl
 
 func _ready():
 	self.modulate = color
+	if color == Color(1, 0.84, 0, 1):  # nice lightning effect
+		$AnimNode.modulate.a = 0.5
+	$AnimNode.modulate.a
 	match shape:
 		DB.towers.Atktyp.SINGLE_TARGET:
 			#TODO figure out scaling issues here

@@ -11,12 +11,11 @@ var circlemob_scene = preload("res://src/mobs/CircleMob.tscn")
 var enemies_dict = {}
 
 # Member variables
-var tier: int = 1
 var xp: int = 0
-var level: int = 1
+var level: int = 0
 var gold: int = 0
 var health: int = 100
-var wave: int = 1
+var wave: int = 0
 var bench: Array = ["", "", "", "", "", "", "", ""]
 var active_towers: Dictionary = {}
 var shop_towers: Array = ["", "", ""]
@@ -26,8 +25,17 @@ var last_location: String = ""
 var need_to_dropdown: bool = false
 
 var active_enemies: Dictionary = {}
+var spawning: bool = false
 
 func _ready():
+	# Update UIs
+	update_gold(4)
+	increment_level()
+	update_wiz_counts()
+	increment_wave()
+	increment_xp(0)
+	update_max_xp()
+	
 	# Create shop
 	shop = shop_scene.instance()
 	shop.set_name("Shop")
@@ -43,8 +51,7 @@ func _ready():
 	shop.get_node("aninode/Upgrade/UpgradeBtn").connect("pressed", self, "_on_upgrade_btn")
 	add_child(shop)
 	generate_shop()
-	update_gold(4)
-	update_wiz_counts()
+	
 	# Create bench
 	# lil' bit of hardcoding
 	$Bench/Slot1/Slot1Btn.connect("pressed", self, "_on_bench_click", [0])
@@ -160,7 +167,11 @@ func _on_lock_btn():
 
 func _on_upgrade_btn():
 	if (shop.is_active()):
-		print("upgrading")
+		if gold > 0:
+			update_gold(-1)
+			increment_xp(1)
+		else:
+			$GameInfo.flash_money()
 
 func generate_shop():
 	for i in 3:
@@ -240,7 +251,7 @@ func _on_placement_click(event):
 	if (is_place):
 		var posn = $FollowNode.is_valid_location()
 		if (posn != $FollowNode.INVALID):
-			if (active_towers.size() >= tier + 2):
+			if (active_towers.size() >= level + 2):
 				$GameInfo.flash_wiz()
 				return
 			print("posn", posn, " | ", cur_carrying)
@@ -311,11 +322,31 @@ func clear_carrying():
 
 func update_wiz_counts():
 	$GameInfo.set_cur_wiz(active_towers.size())
-	$GameInfo.set_max_wiz(tier + 2)
+	$GameInfo.set_max_wiz(level + 2)
 
 func update_gold(add_val: int):
 	gold += add_val
 	$GameInfo.set_money(gold)
+
+func increment_wave():
+	wave += 1
+	$LevelInfo.set_wave(wave)
+
+func increment_level():
+	level += 1
+	$LevelInfo.set_level(level)
+
+func update_max_xp():
+	$LevelInfo.set_max_xp(level * 10)
+
+func increment_xp(val: int):
+	xp += val
+	if xp >= level * 10:
+		xp -= level * 10
+		increment_level()
+		update_max_xp()
+		update_wiz_counts()
+	$LevelInfo.set_cur_xp(xp)
 
 #func _process(delta):
 #	if (Global.game_state == GLOBAL.GAME_STATE.COMBAT):
@@ -325,9 +356,10 @@ func update_gold(add_val: int):
 
 #TODO fix
 func get_wave(lvl: int):
-	return [["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2],["Circle", 0.5], ["Circle", 0.2]]
+	return [["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2],["Circle", 0.5], ["Circle", 0]]
 
 func spawn_wave():
+	spawning = true
 	var wave = get_wave(level)
 	for i in wave:
 		var mob = enemies_dict[i[0]].instance()
@@ -343,18 +375,43 @@ func spawn_wave():
 		path_follow.add_child(remote_trans)
 		$Path/Path/Path2D.add_child(path_follow)
 		mob.remote_position_node = get_node(path_follow.get_path())
-		yield(get_tree().create_timer(i[1]), "timeout")
+		if (i[1]):
+			yield(get_tree().create_timer(i[1]), "timeout")
+	spawning = false
 
 func destroy_mob(mob_id: int, damage_to_tower: int):
 	active_enemies.erase(mob_id)
 	health -= damage_to_tower
 	print(health)
+	
+	if health <= 0:
+		print("DEAD")
+		#TODO
+	
+	if active_enemies.empty() && !spawning:
+		end_round()
 
 func _on_play_click():
+	start_round()
+
+func start_round():
 	Global.game_state = Global.GAME_STATE.COMBAT
+	shop.pullback()
 	$Play.hide()
 	for t in active_towers:
 		active_towers[t].start_combat()
 	spawn_wave()
 
-
+func end_round():
+	Global.game_state = Global.GAME_STATE.PREPARING
+	shop.dropdown()
+	# gain gold
+	var g_level = min(wave, 5)
+	var g_interest = min(gold, 25) / 5
+	update_gold(g_level + g_interest)
+	# gain xp
+	increment_xp(4)
+	increment_wave()
+	$Play.show()
+	for t in active_towers:
+		active_towers[t].stop_combat()
