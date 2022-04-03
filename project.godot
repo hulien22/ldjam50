@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://src/Global.gd"
 }, {
 "base": "Node2D",
+"class": "Mob",
+"language": "GDScript",
+"path": "res://Mob.gd"
+}, {
+"base": "Node2D",
 "class": "Shop",
 "language": "GDScript",
 "path": "res://src/Shop_DropDown.gd"
@@ -32,6 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CastleDB": "",
 "GLOBAL": "",
+"Mob": "",
 "Shop": "",
 "Tower": ""
 }

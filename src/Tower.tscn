@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Tower.gd" type="Script" id=1]
 [ext_resource path="res://src/Wiz.tscn" type="PackedScene" id=2]
+[ext_resource path="res://art/whitecircle.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 209.5, 133.125 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 250.0
 
 [node name="Tower" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,6 +25,17 @@ position = Vector2( 15, 12 )
 shape = SubResource( 1 )
 disabled = true
 
+[node name="Whitecircle" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Circle" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource( 2 )
+
 [node name="Wiz" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1, 1 )
 
@@ -32,3 +47,8 @@ margin_bottom = 217.0
 focus_mode = 0
 enabled_focus_mode = 0
 flat = true
+
+[node name="FireTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]

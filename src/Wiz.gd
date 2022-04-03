@@ -16,6 +16,16 @@ func update_color(face_color: Color, body_color: Color, arms_color: Color, anima
 		$Body.frame = 0
 		$Arms.frame = 0
 
+func set_animation_frame(frame: int):
+	$Body.stop()
+	$Arms.stop()
+	$Body.frame = frame
+	$Arms.frame = frame
+
+func play_once():
+	$Body.play("wiz_noloop", true)
+	$Arms.play("wizarms_noloop", true)
+
 func set_animation_speed(speed: float):
 	print("speed ", speed)
 	$Body.speed_scale = speed

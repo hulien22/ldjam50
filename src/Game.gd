@@ -5,7 +5,8 @@ var shop_scene = preload("res://src/Shop_DropDown.tscn")
 var shop: Shop
 var tower_scene = preload("res://src/Tower.tscn")
 
-var circlemob_scene = preload("res://src/CircleMob.tscn")
+var circlemob_scene = preload("res://src/mobs/CircleMob.tscn")
+var enemies_dict = {}
 
 # Member variables
 var tier: int = 1
@@ -21,6 +22,8 @@ var shop_towers: Array = ["", "", ""]
 var cur_carrying: String = ""
 var last_location: String = ""
 var need_to_dropdown: bool = false
+
+var active_enemies: Array = []
 
 func _ready():
 	# Create shop
@@ -54,12 +57,9 @@ func _ready():
 	
 	
 	Global.game_state = GLOBAL.GAME_STATE.PREPARING
-	spawn_wave()
-#	var ntower = tower_scene.instance()
-#	ntower.set_name("Tower")
-#	ntower.set_val("Evoker", 1)
-#	ntower.position = Vector2(200,200)
-#	add_child(ntower)
+	$Play/PlayBtn.connect("pressed", self, "_on_play_click")
+
+	enemies_dict["Circle"] = circlemob_scene
 
 func combine_towers(active_nodes: Array, bench_nodes: Array, level: int) -> bool:
 	if active_nodes.size() + bench_nodes.size() != level:
@@ -308,13 +308,21 @@ func update_gold(add_val: int):
 #	else:
 #		$Combat.hide()
 
+#TODO fix
+func get_wave(lvl: int):
+	return [["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2],["Circle", 0.5], ["Circle", 0.2]]
+
 func spawn_wave():
-	var wave = [["Mob", 0.5], ["Mob", 0.2], ["Mob", 0.5], ["Mob", 0.2], ["Mob", 0.5], ["Mob", 0.2],["Mob", 0.5], ["Mob", 0.2]]
+	var wave = get_wave(level)
+	active_enemies.clear()
+	active_enemies.resize(wave.size())
 	for i in wave:
-		var mob = circlemob_scene.instance()
+		var mob = enemies_dict[i[0]].instance()
 		$EntitiesSort.add_child(mob)
+		active_enemies.append(mob)
 		var path_follow = PathFollow2D.new()
 		path_follow.rotate = false
+		path_follow.loop = false
 		path_follow.scale *= 0.1
 		var remote_trans = RemoteTransform2D.new()
 		remote_trans.remote_path = mob.get_path()
@@ -322,4 +330,12 @@ func spawn_wave():
 		$Path/Path/Path2D.add_child(path_follow)
 		mob.remote_position_node = get_node(path_follow.get_path())
 		yield(get_tree().create_timer(i[1]), "timeout")
+
+func _on_play_click():
+	Global.game_state = Global.GAME_STATE.COMBAT
+	$Play.hide()
+	for t in active_towers:
+		active_towers[t].start_combat()
+	spawn_wave()
+
 

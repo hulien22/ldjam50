@@ -9,9 +9,9 @@ func _ready():
 func _process(delta):
 	position = get_global_mouse_position()
 	if (is_valid_location() != INVALID):
-		$Area2D/ValidBox.color = Color8(0,255,0,100)
+		$Area2D/ValidBox.modulate = Color8(0,255,0,100)
 	else:
-		$Area2D/ValidBox.color = Color8(0,0,0,0)#Color8(255,0,0,100)
+		$Area2D/ValidBox.modulate = Color8(0,0,0,0)#Color8(255,0,0,100)
 		
 
 func update_entry(name: String, lvl: int = 1):
@@ -19,6 +19,7 @@ func update_entry(name: String, lvl: int = 1):
 		$Wiz.hide()
 	else:
 		var row = DB.towers.get(name + "_" + str(lvl))
+		$Area2D/ValidBox/Range.scale = Vector2(row.atkrng, row.atkrng)
 		$Wiz.update_color(ColorN(row.facecolor), ColorN(row.bodycolor), ColorN(row.armcolor), true)
 		$Wiz.set_level(lvl - 1)
 		$Wiz.show()

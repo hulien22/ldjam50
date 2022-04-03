@@ -12,6 +12,11 @@
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": false,
+"name": "wizarms_noloop",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "wizarms",
 "speed": 1.0
@@ -19,6 +24,11 @@ animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "wiz",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": false,
+"name": "wiz_noloop",
 "speed": 1.0
 } ]
 
@@ -51,13 +61,11 @@ modulate = Color( 0.0509804, 0.298039, 0.498039, 1 )
 position = Vector2( 0, 1 )
 frames = SubResource( 1 )
 animation = "wiz"
-frame = 1
 
 [node name="Arms" type="AnimatedSprite" parent="."]
 modulate = Color( 0.780392, 0.772549, 0.168627, 1 )
 frames = SubResource( 1 )
 animation = "wizarms"
-frame = 1
 
 [node name="Level" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 0, 1 )
