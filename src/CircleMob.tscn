@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://art/mob1.png" type="Texture" id=1]
 [ext_resource path="res://art/mob2.png" type="Texture" id=2]
+[ext_resource path="res://src/CircleMob.gd" type="Script" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -15,10 +16,10 @@ animations = [ {
 extents = Vector2( 149, 126.5 )
 
 [node name="CircleMob" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="."]

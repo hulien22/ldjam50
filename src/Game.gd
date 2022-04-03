@@ -5,7 +5,6 @@ var shop_scene = preload("res://src/Shop_DropDown.tscn")
 var shop: Shop
 var tower_scene = preload("res://src/Tower.tscn")
 
-var mob_scene = preload("res://src/Mob.tscn")
 var circlemob_scene = preload("res://src/CircleMob.tscn")
 
 # Member variables
@@ -312,10 +311,15 @@ func update_gold(add_val: int):
 func spawn_wave():
 	var wave = [["Mob", 0.5], ["Mob", 0.2], ["Mob", 0.5], ["Mob", 0.2], ["Mob", 0.5], ["Mob", 0.2],["Mob", 0.5], ["Mob", 0.2]]
 	for i in wave:
-		var remote_sprite = circlemob_scene.instance()
-		$EntitiesSort.add_child(remote_sprite)
-		var m = mob_scene.instance()
-		m.scale *= 0.1
-		m.get_node("RemoteTransform2D").remote_path = remote_sprite.get_path()
-		$Path/Path/Path2D.add_child(m)
+		var mob = circlemob_scene.instance()
+		$EntitiesSort.add_child(mob)
+		var path_follow = PathFollow2D.new()
+		path_follow.rotate = false
+		path_follow.scale *= 0.1
+		var remote_trans = RemoteTransform2D.new()
+		remote_trans.remote_path = mob.get_path()
+		path_follow.add_child(remote_trans)
+		$Path/Path/Path2D.add_child(path_follow)
+		mob.remote_position_node = get_node(path_follow.get_path())
 		yield(get_tree().create_timer(i[1]), "timeout")
+
