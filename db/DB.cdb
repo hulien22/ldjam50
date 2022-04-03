@@ -31,12 +31,27 @@
 					"display": null
 				},
 				{
-					"typeStr": "5:SELF_CIRCLE,SELF_SQUARE,CIRCLE,LINE,BUFF,SINGLE_TARGET,GAIN_GOLD,BUFF_DMG,BUFF_RNG,BUFF_SPD,SELF_CIRCLE_WEAKEN",
+					"typeStr": "5:SELF_CIRCLE,SELF_SQUARE,CIRCLE,LINE,BUFF,SINGLE_TARGET,GAIN_GOLD,BUFF_DMG,BUFF_RNG,BUFF_SPD,SELF_CIRCLE_WEAKEN,JESTER",
 					"name": "atktyp"
 				},
 				{
 					"typeStr": "4",
 					"name": "atktypsz",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "knockback",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "slowdown",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "poison",
 					"display": null
 				},
 				{
@@ -66,7 +81,10 @@
 					"description": "Throws a fireball that explodes",
 					"armcolor": "crimson",
 					"facecolor": "crimson",
-					"bodycolor": "crimson"
+					"bodycolor": "crimson",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Evoker_2",
@@ -79,7 +97,10 @@
 					"description": "Throws a bigger fireball that explodes",
 					"armcolor": "crimson",
 					"facecolor": "crimson",
-					"bodycolor": "crimson"
+					"bodycolor": "crimson",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Evoker_3",
@@ -92,7 +113,10 @@
 					"atktypsz": 8,
 					"armcolor": "crimson",
 					"facecolor": "crimson",
-					"bodycolor": "crimson"
+					"bodycolor": "crimson",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Frost_1",
@@ -105,7 +129,10 @@
 					"description": "Damages and slows enemies around",
 					"armcolor": "cyan",
 					"facecolor": "cyan",
-					"bodycolor": "cyan"
+					"bodycolor": "cyan",
+					"knockback": 0,
+					"slowdown": 3,
+					"poison": 0
 				},
 				{
 					"name": "Frost_2",
@@ -118,7 +145,10 @@
 					"atktypsz": 3,
 					"facecolor": "cyan",
 					"bodycolor": "cyan",
-					"armcolor": "cyan"
+					"armcolor": "cyan",
+					"knockback": 0,
+					"slowdown": 5,
+					"poison": 0
 				},
 				{
 					"name": "Frost_3",
@@ -131,7 +161,10 @@
 					"atktypsz": 3,
 					"facecolor": "cyan",
 					"bodycolor": "cyan",
-					"armcolor": "cyan"
+					"armcolor": "cyan",
+					"knockback": 0,
+					"slowdown": 8,
+					"poison": 0
 				},
 				{
 					"name": "Lightning_1",
@@ -144,33 +177,42 @@
 					"atktypsz": 1000,
 					"facecolor": "gold",
 					"bodycolor": "gold",
-					"armcolor": "gold"
+					"armcolor": "gold",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Lightning_2",
 					"tier": 1,
 					"description": "Attack enemies in a line from caster",
-					"atkspd": 0,
-					"atkdmg": 0,
-					"atkrng": 0,
+					"atkspd": 5,
+					"atkdmg": 14,
+					"atkrng": 5,
 					"atktyp": 3,
-					"atktypsz": 0,
+					"atktypsz": 1500,
 					"facecolor": "gold",
 					"bodycolor": "gold",
-					"armcolor": "gold"
+					"armcolor": "gold",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Lightning_3",
 					"tier": 1,
 					"description": "Attack enemies in a line from caster",
-					"atkspd": 0,
-					"atkdmg": 0,
-					"atkrng": 0,
+					"atkspd": 5,
+					"atkdmg": 38,
+					"atkrng": 5,
 					"atktyp": 3,
-					"atktypsz": 0,
+					"atktypsz": 2000,
 					"facecolor": "gold",
 					"bodycolor": "gold",
-					"armcolor": "gold"
+					"armcolor": "gold",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Arcanist_1",
@@ -183,46 +225,58 @@
 					"atktypsz": 0,
 					"facecolor": "dodgerblue",
 					"bodycolor": "dodgerblue",
-					"armcolor": "dodgerblue"
+					"armcolor": "dodgerblue",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Banker_1",
 					"tier": 1,
 					"description": "Gains extra money at end of rounds",
 					"atkspd": 0,
-					"atkdmg": 1,
+					"atkdmg": 0,
 					"atkrng": 0,
 					"atktyp": 6,
-					"atktypsz": 0,
+					"atktypsz": 1,
 					"facecolor": "limegreen",
 					"bodycolor": "limegreen",
-					"armcolor": "limegreen"
+					"armcolor": "limegreen",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Garviturgist_1",
 					"tier": 1,
 					"description": "Knocksback single target",
-					"atkspd": 0,
-					"atkdmg": 0,
-					"atkrng": 0,
+					"atkspd": 4,
+					"atkdmg": 12,
+					"atkrng": 2.5,
 					"atktyp": 5,
 					"atktypsz": 0,
 					"facecolor": "rebeccapurple",
 					"bodycolor": "dodgerblue",
-					"armcolor": "rebeccapurple"
+					"armcolor": "rebeccapurple",
+					"knockback": 100,
+					"slowdown": 0,
+					"poison": 0
 				},
 				{
 					"name": "Poisoner_1",
 					"tier": 1,
 					"description": "Poisons enemies around",
-					"atkspd": 0,
-					"atkdmg": 0,
-					"atkrng": 0,
-					"atktyp": 1,
-					"atktypsz": 0,
+					"atkspd": 6,
+					"atkdmg": 5,
+					"atkrng": 2,
+					"atktyp": 2,
+					"atktypsz": 1,
 					"facecolor": "hotpink",
-					"bodycolor": "hotpink",
-					"armcolor": "hotpink"
+					"bodycolor": "crimson",
+					"armcolor": "hotpink",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 5
 				},
 				{
 					"name": "Seer_1",
@@ -235,7 +289,10 @@
 					"atktypsz": 0,
 					"facecolor": "darkorange",
 					"bodycolor": "darkorange",
-					"armcolor": "darkorange"
+					"armcolor": "darkorange",
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0
 				}
 			],
 			"separators": [],

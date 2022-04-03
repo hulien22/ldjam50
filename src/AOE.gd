@@ -7,11 +7,14 @@ var damage: float
 var size: float
 var timer_timeout: float
 var color: Color
+var knockback: float
+var slowdown: float
+var poison: float
 
 var target: Vector2
 var source: Vector2
 
-func set_values(shp, dmg: float, sz: float, tgt: Vector2, tmr_timeout: float, clr: Color, src: Vector2 = INVALID):
+func set_values(shp, dmg: float, sz: float, tgt: Vector2, src: Vector2, tmr_timeout: float, clr: Color, knk: float, slw: float, psn: float):
 	shape = shp
 	damage = dmg
 	size = sz
@@ -19,6 +22,9 @@ func set_values(shp, dmg: float, sz: float, tgt: Vector2, tmr_timeout: float, cl
 	source = src
 	timer_timeout = tmr_timeout
 	color = clr
+	knockback = knk
+	slowdown = slw
+	poison = psn
 
 func _ready():
 	self.modulate = color
@@ -84,7 +90,7 @@ func deal_damage():
 	var nodes = $DetectArea.get_overlapping_areas()
 	print(nodes)
 	for n in nodes:
-		n.get_parent().on_hit(damage)
+		n.get_parent().on_hit(damage, knockback, slowdown, poison)
 	$DetectArea.hide()
 
 func _on_AnimationPlayer_animation_finished(anim_name):

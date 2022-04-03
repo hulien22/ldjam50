@@ -21,20 +21,45 @@ func set_defaults():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if remote_position_node:
-		remote_position_node.offset += speed * delta
+		remote_position_node.offset += cur_speed * delta
 		if remote_position_node.unit_offset == 1.0:
 			#TODO deal damage to fort
 			on_destroy(tower_dmg)
+	
 
-func on_hit(damage: float = 0, knockback: float = 0, dot_dmg: float = 0, dot_time: float = 0, dot_rate: float = 0):
+func on_hit(damage: float = 0, knockback: float = 0, slowdown: float = 0, poison: float = 0):
 	health -= damage
 	health_bar.value = 100.0 * health / max_health
 	if (health <= 0):
 		on_destroy()
 		return
 	if (knockback):
-		pass
-		
+		if remote_position_node:
+			remote_position_node.offset -= knockback
+	if (slowdown):
+		cur_speed /= slowdown
+		var tmr = Timer.new()
+		add_child(tmr)
+		tmr.connect("timeout", self, "_speed_up", [slowdown])
+		tmr.one_shot = true
+		tmr.start(1)
+	if (poison > 0):
+		var tmr = Timer.new()
+		add_child(tmr)
+		tmr.connect("timeout", self, "_deal_poison", [poison])
+		tmr.one_shot = true
+		tmr.start(1)
+
+func _deal_poison(dmg: float):
+	flash_color(ColorN("hotpink"))
+	on_hit(dmg, 0, 0, dmg - 1)
+
+func _speed_up(v: float):
+	cur_speed = min(speed, cur_speed * v)
+
+func flash_color(c: Color):
+	pass
+
 func on_destroy(damage_to_tower: int = 0):
 	game.destroy_mob(mob_id, damage_to_tower)
 	if remote_position_node:

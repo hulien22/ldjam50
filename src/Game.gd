@@ -160,12 +160,17 @@ func _on_refresh_btn():
 			update_gold(-1)
 			print("refreshing")
 			generate_shop()
+			if shop.get_node("aninode/Lock").frame == 1:
+				shop.get_node("aninode/Lock").frame = 0
 		else:
 			$GameInfo.flash_money()
 
 func _on_lock_btn():
 	if (shop.is_active()):
-		print("lock")
+		if shop.get_node("aninode/Lock").frame == 0:
+			shop.get_node("aninode/Lock").frame = 1
+		else:
+			shop.get_node("aninode/Lock").frame = 0
 		update_gold(10)
 
 func _on_upgrade_btn():
@@ -228,6 +233,7 @@ func _on_bench_click(n: int):
 				ntower.set_val(twr[0], int(twr[1]))
 				ntower.position = old_posn
 				ntower.scale *= 0.15
+				ntower.game = self
 				ntower.get_node("SelectBtn").connect("pressed", self, "_on_active_click", [node_name])
 				active_towers[node_name] = ntower
 				$EntitiesSort.add_child(ntower)
@@ -265,6 +271,7 @@ func _on_placement_click(event):
 			ntower.set_val(twr[0], int(twr[1]))
 			ntower.position = posn
 			ntower.scale *= 0.15
+			ntower.game = self
 			ntower.get_node("SelectBtn").connect("pressed", self, "_on_active_click", [node_name])
 			active_towers[node_name] = ntower
 			$EntitiesSort.add_child(ntower)
@@ -287,6 +294,7 @@ func _on_placement_click(event):
 			ntower.set_val(twr[0], int(twr[1]))
 			ntower.position = old_posn
 			ntower.scale *= 0.15
+			ntower.game = self
 			ntower.get_node("SelectBtn").connect("pressed", self, "_on_active_click", [node_name])
 			active_towers[node_name] = ntower
 			$EntitiesSort.add_child(ntower)
@@ -416,7 +424,6 @@ func start_round():
 
 func end_round():
 	Global.game_state = Global.GAME_STATE.PREPARING
-	shop.dropdown()
 	# gain gold
 	var g_level = min(wave, 5)
 	var g_interest = min(gold, 25) / 5
@@ -424,6 +431,11 @@ func end_round():
 	# gain xp
 	increment_xp(4)
 	increment_wave()
+	if shop.get_node("aninode/Lock").frame == 0:
+		generate_shop()
+	else:
+		shop.get_node("aninode/Lock").frame = 0
+	shop.dropdown()
 	$FastForwards.hide()
 	$Play.show()
 	for t in active_towers:

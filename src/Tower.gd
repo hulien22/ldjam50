@@ -12,6 +12,11 @@ var row_ # : DB.Towers.TowersRow
 var atkdmg: float
 var atkspd: float
 var atkrng: float
+var knockback: float
+var slowdown: float
+var poison: float
+
+var game
 
 # ctor
 func set_val(name: String, level: int):
@@ -48,8 +53,9 @@ func stop_combat():
 		$DetectArea.disconnect("area_entered", self, "try_shoot")
 	# If atkspd is 0, then we only do stuff on round end.
 	if row_.atkspd == 0:
-		#TODO
-		print("end of round")
+		match row_.atktyp:
+			DB.towers.Atktyp.GAIN_GOLD:
+				game.update_gold(row_.atktypsz)
 
 func _on_FireTimer_timeout():
 	if Global.game_state == Global.GAME_STATE.COMBAT:
@@ -81,23 +87,25 @@ func has_enemy_to_shoot() -> Mob:
 
 func shoot(target: Mob):
 	print("shoot!", target)
-	# This is it, the big boi
 	match row_.atktyp:
 		DB.towers.Atktyp.SINGLE_TARGET:
 			# Just deal damage directly for single target
 			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, 0, ColorN(row_.facecolor), self.global_position)
+			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, 0, ColorN(row_.facecolor), knockback, slowdown, poison)
 			call_deferred("add_child", aoe)
-			target.on_hit(row_.atkdmg)
+			target.on_hit(row_.atkdmg, knockback, slowdown, poison)
 		_:  # else send the damage 
 			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
+			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, 0.1, ColorN(row_.facecolor), knockback, slowdown, poison)
 			call_deferred("add_child", aoe)
 
 func update_stats():
 	atkdmg = row_.atkdmg
 	atkspd = row_.atkspd
 	atkrng = row_.atkrng
+	knockback = row_.knockback
+	slowdown = row_.slowdown
+	poison = row_.poison
 	var nodes = $BuffArea.get_overlapping_areas()
 	print(nodes)
 	for n in nodes:
