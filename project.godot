@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://src/Global.gd"
 }, {
 "base": "Node2D",
+"class": "Game",
+"language": "GDScript",
+"path": "res://src/Game.gd"
+}, {
+"base": "Node2D",
 "class": "Mob",
 "language": "GDScript",
 "path": "res://Mob.gd"
@@ -37,6 +42,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CastleDB": "",
 "GLOBAL": "",
+"Game": "",
 "Mob": "",
 "Shop": "",
 "Tower": ""
@@ -63,6 +69,10 @@ window/stretch/aspect="keep"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/thejustinwalsh.castledb/plugin.cfg" )
+
+[global]
+
+engine=false
 
 [physics]
 

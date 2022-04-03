@@ -4,6 +4,8 @@ class_name Tower
 
 const INVALID = Vector2(-1,-1)
 
+const aoe_scene = preload("res://src/AOE.tscn")
+
 var name_: String
 var level_: int
 var row_ # : DB.Towers.TowersRow
@@ -16,7 +18,8 @@ func set_val(name: String, level: int):
 	var detect_circle = CircleShape2D.new()
 	detect_circle.radius = row_.atkrng * 250 # MAGIC NUMBERS :D
 	$DetectArea/Circle.shape = detect_circle
-	$FireTimer.wait_time = row_.atkspd
+	if row_.atkspd > 0:
+		$FireTimer.wait_time = row_.atkspd
 	update_sprite()
 
 func update_sprite():
@@ -49,25 +52,45 @@ func try_shoot(area = null):
 	if $DetectArea.is_connected("area_entered", self, "try_shoot"):
 		$DetectArea.disconnect("area_entered", self, "try_shoot")
 	var target = has_enemy_to_shoot()
-	if (target == INVALID):
+	if (target == null):
 		$DetectArea.connect("area_entered", self, "try_shoot")
 	else:
 		shoot(target)
 		$Wiz.play_once()
 		$FireTimer.start()
 
-func has_enemy_to_shoot() -> Vector2:
+func has_enemy_to_shoot() -> Mob:
 	var nodes = $DetectArea.get_overlapping_areas()
 	if nodes.empty():
-		return INVALID
+		return null
 	var max_i: int = 0
 	var max_offset: float = 0.0
 	for i in nodes.size():
-		print(nodes[i].get_parent().get_path_progress())
 		if (nodes[i].get_parent().get_path_progress() > max_offset):
 			i = max_i
 			max_offset = nodes[i].get_parent().get_path_progress()
-	return nodes[max_i].get_parent().global_position
+	return nodes[max_i].get_parent()
 
-func shoot(target: Vector2):
+func shoot(target: Mob):
 	print("shoot!", target)
+	# This is it, the big boi
+	match row_.atktyp:
+		DB.towers.Atktyp.CIRCLE:
+			print("circle")
+			var aoe = aoe_scene.instance()
+			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
+			call_deferred("add_child", aoe)
+		DB.towers.Atktyp.LINE:
+			print("line")
+			var aoe = aoe_scene.instance()
+			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
+			call_deferred("add_child", aoe)
+		DB.towers.Atktyp.SELF_CIRCLE:
+			print("self_circle")
+		DB.towers.Atktyp.SINGLE_TARGET:
+			print("single_target")
+			# Just deal damage directly for single target
+			var aoe = aoe_scene.instance()
+			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0, ColorN(row_.facecolor), self.global_position)
+			call_deferred("add_child", aoe)
+			target.on_hit(row_.atkdmg)

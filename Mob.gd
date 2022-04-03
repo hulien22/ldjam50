@@ -7,9 +7,12 @@ var health: int
 var speed: float
 var cur_speed: float
 var tower_dmg: int
+var mob_id: int = Generator.generate_mob_id()
 
+var hit_box: Area2D
 var remote_position_node: PathFollow2D
 var health_bar: TextureProgress
+var game
 
 func set_defaults():
 	health = max_health
@@ -19,6 +22,9 @@ func set_defaults():
 func _process(delta):
 	if remote_position_node:
 		remote_position_node.offset += speed * delta
+		if remote_position_node.unit_offset == 1.0:
+			#TODO deal damage to fort
+			on_destroy(tower_dmg)
 
 func on_hit(damage: float = 0, knockback: float = 0, dot_dmg: float = 0, dot_time: float = 0, dot_rate: float = 0):
 	health -= damage
@@ -29,9 +35,11 @@ func on_hit(damage: float = 0, knockback: float = 0, dot_dmg: float = 0, dot_tim
 	if (knockback):
 		pass
 		
-func on_destroy():
+func on_destroy(damage_to_tower: int = 0):
+	game.destroy_mob(mob_id, damage_to_tower)
 	if remote_position_node:
-		remote_position_node.get_parent().queue_free()
+		remote_position_node.queue_free()
+		remote_position_node = null
 	self.queue_free()
 
 func get_path_progress() -> float:

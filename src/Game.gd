@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Game
+
 # Scenes / Children
 var shop_scene = preload("res://src/Shop_DropDown.tscn")
 var shop: Shop
@@ -12,7 +14,7 @@ var enemies_dict = {}
 var tier: int = 1
 var xp: int = 0
 var level: int = 1
-var gold: int = 4
+var gold: int = 0
 var health: int = 100
 var wave: int = 1
 var bench: Array = ["", "", "", "", "", "", "", ""]
@@ -23,7 +25,7 @@ var cur_carrying: String = ""
 var last_location: String = ""
 var need_to_dropdown: bool = false
 
-var active_enemies: Array = []
+var active_enemies: Dictionary = {}
 
 func _ready():
 	# Create shop
@@ -41,6 +43,8 @@ func _ready():
 	shop.get_node("aninode/Upgrade/UpgradeBtn").connect("pressed", self, "_on_upgrade_btn")
 	add_child(shop)
 	generate_shop()
+	update_gold(4)
+	update_wiz_counts()
 	# Create bench
 	# lil' bit of hardcoding
 	$Bench/Slot1/Slot1Btn.connect("pressed", self, "_on_bench_click", [0])
@@ -109,6 +113,7 @@ func check_for_combines(name: String) -> bool:
 			bench_nodes.append(n)
 	combine_towers(active_nodes, bench_nodes, 3)
 	# Return true regardless as we did combine something
+	update_wiz_counts()
 	return true
 
 func _on_shop_buy(i: int):
@@ -118,7 +123,7 @@ func _on_shop_buy(i: int):
 		if (shop_towers[i] != ""):
 			var cost = DB.towers.get(shop_towers[i] + "_1").tier
 			if (gold >= cost):
-				# TODO check for triples before bench
+				# check for triples before bench
 				if check_for_combines(shop_towers[i]):
 					shop_towers[i] = ""
 					shop.update_slot(i)
@@ -128,7 +133,6 @@ func _on_shop_buy(i: int):
 				# Check bench if space
 				for n in bench.size():
 					if (bench[n] == ""):
-						#TODO GOLD
 						bench[n] = shop_towers[i] + "_1"
 						$Bench.update_slot(n, shop_towers[i], 1)
 						shop_towers[i] = ""
@@ -138,6 +142,7 @@ func _on_shop_buy(i: int):
 				print("no spots left")
 			else:
 				print("not enough gold")
+				$GameInfo.flash_money()
 	
 func _on_refresh_btn():
 	if (shop.is_active()):
@@ -145,6 +150,8 @@ func _on_refresh_btn():
 			update_gold(-1)
 			print("refreshing")
 			generate_shop()
+		else:
+			$GameInfo.flash_money()
 
 func _on_lock_btn():
 	if (shop.is_active()):
@@ -233,6 +240,9 @@ func _on_placement_click(event):
 	if (is_place):
 		var posn = $FollowNode.is_valid_location()
 		if (posn != $FollowNode.INVALID):
+			if (active_towers.size() >= tier + 2):
+				$GameInfo.flash_wiz()
+				return
 			print("posn", posn, " | ", cur_carrying)
 			var twr = cur_carrying.split("_")
 			var node_name = "Tower_" + str(posn)
@@ -282,6 +292,7 @@ func _on_active_click(node_name: String):
 		var twr = cur_carrying.split("_")
 		$FollowNode.update_entry(twr[0], int(twr[1]))
 		$FollowNode.show()
+		update_wiz_counts()
 
 func _on_trash_click():
 	print("trash", cur_carrying)
@@ -290,6 +301,7 @@ func _on_trash_click():
 		clear_carrying()
 
 func clear_carrying():
+	update_wiz_counts()
 	$FollowNode.hide()
 	cur_carrying = ""
 	last_location = ""
@@ -297,10 +309,13 @@ func clear_carrying():
 		shop.dropdown()
 	shop.get_node("aninode/BannerBtn").show()
 
+func update_wiz_counts():
+	$GameInfo.set_cur_wiz(active_towers.size())
+	$GameInfo.set_max_wiz(tier + 2)
+
 func update_gold(add_val: int):
 	gold += add_val
-	print(gold)
-	#TODO update displays
+	$GameInfo.set_money(gold)
 
 #func _process(delta):
 #	if (Global.game_state == GLOBAL.GAME_STATE.COMBAT):
@@ -314,12 +329,11 @@ func get_wave(lvl: int):
 
 func spawn_wave():
 	var wave = get_wave(level)
-	active_enemies.clear()
-	active_enemies.resize(wave.size())
 	for i in wave:
 		var mob = enemies_dict[i[0]].instance()
+		mob.game = self
 		$EntitiesSort.add_child(mob)
-		active_enemies.append(mob)
+		active_enemies[mob.mob_id] = mob
 		var path_follow = PathFollow2D.new()
 		path_follow.rotate = false
 		path_follow.loop = false
@@ -330,6 +344,11 @@ func spawn_wave():
 		$Path/Path/Path2D.add_child(path_follow)
 		mob.remote_position_node = get_node(path_follow.get_path())
 		yield(get_tree().create_timer(i[1]), "timeout")
+
+func destroy_mob(mob_id: int, damage_to_tower: int):
+	active_enemies.erase(mob_id)
+	health -= damage_to_tower
+	print(health)
 
 func _on_play_click():
 	Global.game_state = Global.GAME_STATE.COMBAT

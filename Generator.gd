@@ -33,3 +33,9 @@ func select_tier_for_level(level: int) -> int :
 			return i + 1
 	print("n still non-negative", n, level)
 	return 1
+
+var mob_id: int = 0
+func generate_mob_id() -> int:
+	mob_id += 1
+	return mob_id
+	
