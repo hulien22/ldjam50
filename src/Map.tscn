@@ -64,11 +64,11 @@ texture = ExtResource( 2 )
 position = Vector2( 1318, -212 )
 scale = Vector2( 0.2, 0.2 )
 
-[node name="Path" parent="." instance=ExtResource( 17 )]
-
 [node name="Shop" parent="." instance=ExtResource( 4 )]
 visible = false
 position = Vector2( 574, -736 )
+
+[node name="Path" parent="." instance=ExtResource( 17 )]
 
 [node name="EntitiesSort" type="YSort" parent="."]
 

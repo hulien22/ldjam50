@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Mob.gd" type="Script" id=3]
+
+[node name="Mob" type="PathFollow2D"]
+rotate = false
+script = ExtResource( 3 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
