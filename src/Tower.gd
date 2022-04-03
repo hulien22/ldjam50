@@ -86,17 +86,19 @@ func has_enemy_to_shoot() -> Mob:
 	return nodes[max_i].get_parent()
 
 func shoot(target: Mob):
-	print("shoot!", target)
 	match row_.atktyp:
 		DB.towers.Atktyp.SINGLE_TARGET:
 			# Just deal damage directly for single target
 			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, 0, ColorN(row_.facecolor), knockback, slowdown, poison)
+			aoe.set_values(self, row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, 0, ColorN(row_.facecolor), knockback, slowdown, poison)
 			call_deferred("add_child", aoe)
-			target.on_hit(row_.atkdmg, knockback, slowdown, poison)
+			if target.on_hit(row_.atkdmg, knockback, slowdown, poison):
+				on_kill()
 		_:  # else send the damage 
+			if name_ == "Mercenary":
+				atkdmg = game.gold
 			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, 0.1, ColorN(row_.facecolor), knockback, slowdown, poison)
+			aoe.set_values(self, row_.atktyp, atkdmg, row_.atktypsz, target.global_position, self.global_position, row_.delay, ColorN(row_.facecolor), knockback, slowdown, poison)
 			call_deferred("add_child", aoe)
 
 func update_stats():
@@ -107,7 +109,6 @@ func update_stats():
 	slowdown = row_.slowdown
 	poison = row_.poison
 	var nodes = $BuffArea.get_overlapping_areas()
-	print(nodes)
 	for n in nodes:
 		match n.get_parent().row_.atktyp:
 			DB.towers.Atktyp.BUFF_RNG:
@@ -120,8 +121,13 @@ func update_stats():
 	
 	$DetectArea/Circle.shape.radius = atkrng * 250
 	if atkspd > 0:
-		$FireTimer.wait_time = atkspd
+		$FireTimer.wait_time = atkspd * 0.5
 
+func on_kill():
+	match name_:
+		"Thief":
+			game.update_gold(1)
+	pass
 
 func _on_SelectBtn_mouse_entered():
 	update_stats()

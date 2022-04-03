@@ -16,7 +16,6 @@ func _ready():
 	slots = [$aninode/Slot1, $aninode/Slot2, $aninode/Slot3]
 
 func _on_BannerBtn_pressed():
-	print(animating)
 	if (!animating):
 		animating = true
 		active = false

@@ -55,6 +55,11 @@
 					"display": null
 				},
 				{
+					"typeStr": "4",
+					"name": "delay",
+					"display": null
+				},
+				{
 					"typeStr": "1",
 					"name": "facecolor",
 					"display": null
@@ -73,53 +78,56 @@
 				{
 					"name": "Evoker_1",
 					"tier": 1,
-					"atkspd": 5,
+					"atkspd": 8,
 					"atkdmg": 10,
 					"atkrng": 5,
 					"atktyp": 2,
-					"atktypsz": 3,
+					"atktypsz": 2,
 					"description": "Throws a fireball that explodes",
 					"armcolor": "crimson",
 					"facecolor": "crimson",
 					"bodycolor": "crimson",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Evoker_2",
 					"tier": 1,
-					"atkspd": 5,
+					"atkspd": 8,
 					"atkdmg": 20,
 					"atkrng": 5,
 					"atktyp": 2,
-					"atktypsz": 5,
+					"atktypsz": 2.5,
 					"description": "Throws a bigger fireball that explodes",
 					"armcolor": "crimson",
 					"facecolor": "crimson",
 					"bodycolor": "crimson",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Evoker_3",
 					"tier": 1,
 					"description": "Throws a BIGGER fireball that explodes",
-					"atkspd": 5,
+					"atkspd": 8,
 					"atkdmg": 50,
 					"atkrng": 5,
 					"atktyp": 2,
-					"atktypsz": 8,
+					"atktypsz": 3,
 					"armcolor": "crimson",
 					"facecolor": "crimson",
 					"bodycolor": "crimson",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
-					"name": "Frost_1",
+					"name": "FrostMage_1",
 					"tier": 1,
 					"atkspd": 4,
 					"atkdmg": 5,
@@ -131,11 +139,12 @@
 					"facecolor": "cyan",
 					"bodycolor": "cyan",
 					"knockback": 0,
-					"slowdown": 3,
-					"poison": 0
+					"slowdown": 0.6,
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
-					"name": "Frost_2",
+					"name": "FrostMage_2",
 					"tier": 1,
 					"description": "Damages and slows enemies around",
 					"atkspd": 4,
@@ -147,11 +156,12 @@
 					"bodycolor": "cyan",
 					"armcolor": "cyan",
 					"knockback": 0,
-					"slowdown": 5,
-					"poison": 0
+					"slowdown": 0.6,
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
-					"name": "Frost_3",
+					"name": "FrostMage_3",
 					"tier": 1,
 					"description": "Damages and slows enemies around",
 					"atkspd": 4,
@@ -163,8 +173,9 @@
 					"bodycolor": "cyan",
 					"armcolor": "cyan",
 					"knockback": 0,
-					"slowdown": 8,
-					"poison": 0
+					"slowdown": 0.5,
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Lightning_1",
@@ -180,7 +191,8 @@
 					"armcolor": "gold",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Lightning_2",
@@ -196,7 +208,8 @@
 					"armcolor": "gold",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Lightning_3",
@@ -212,7 +225,8 @@
 					"armcolor": "gold",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Arcanist_1",
@@ -228,7 +242,8 @@
 					"armcolor": "dodgerblue",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Banker_1",
@@ -244,7 +259,8 @@
 					"armcolor": "limegreen",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Garviturgist_1",
@@ -260,7 +276,8 @@
 					"armcolor": "rebeccapurple",
 					"knockback": 100,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
 				},
 				{
 					"name": "Poisoner_1",
@@ -276,7 +293,8 @@
 					"armcolor": "hotpink",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 5
+					"poison": 5,
+					"delay": 0.1
 				},
 				{
 					"name": "Seer_1",
@@ -292,7 +310,229 @@
 					"armcolor": "darkorange",
 					"knockback": 0,
 					"slowdown": 0,
-					"poison": 0
+					"poison": 0,
+					"delay": 0.1
+				},
+				{
+					"name": "IceShard_1",
+					"tier": 2,
+					"description": "Throws an ice shard to slow enemies",
+					"atkspd": 5,
+					"atkdmg": 8,
+					"atkrng": 4.5,
+					"atktyp": 2,
+					"atktypsz": 1.5,
+					"knockback": 0,
+					"slowdown": 0.5,
+					"poison": 0,
+					"facecolor": "cyan",
+					"bodycolor": "crimson",
+					"armcolor": "cyan",
+					"delay": 0.1
+				},
+				{
+					"name": "Displacer_1",
+					"tier": 2,
+					"description": "Knocksback enemies in front",
+					"atkspd": 8,
+					"atkdmg": 5,
+					"atkrng": 2.5,
+					"atktyp": 3,
+					"atktypsz": 500,
+					"knockback": 200,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "rebeccapurple",
+					"bodycolor": "gold",
+					"armcolor": "rebeccapurple",
+					"delay": 0.1
+				},
+				{
+					"name": "Thief_1",
+					"tier": 2,
+					"description": "Gains gold on kills",
+					"atkspd": 1,
+					"atkdmg": 5,
+					"atkrng": 2,
+					"atktyp": 5,
+					"atktypsz": 0,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "limegreen",
+					"bodycolor": "dodgerblue",
+					"armcolor": "limegreen",
+					"delay": 0.1
+				},
+				{
+					"name": "Overcharger_1",
+					"tier": 2,
+					"description": "Strikes small area with concentrated lightning",
+					"atkspd": 5,
+					"atkdmg": 15,
+					"atkrng": 5,
+					"atktyp": 2,
+					"atktypsz": 0.5,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "gold",
+					"bodycolor": "crimson",
+					"armcolor": "gold",
+					"delay": 0.1
+				},
+				{
+					"name": "Noble_1",
+					"tier": 3,
+					"description": "Increases damage of allies",
+					"atkspd": 0,
+					"atkdmg": 1.2,
+					"atkrng": 3,
+					"atktyp": 7,
+					"atktypsz": 0,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "limegreen",
+					"bodycolor": "darkorange",
+					"armcolor": "limegreen",
+					"delay": 0.1
+				},
+				{
+					"name": "Eruptor_1",
+					"tier": 3,
+					"description": "Launches large meteorite that explodes after delay",
+					"atkspd": 7,
+					"atkdmg": 30,
+					"atkrng": 6,
+					"atktyp": 2,
+					"atktypsz": 4,
+					"knockback": 50,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "crimson",
+					"bodycolor": "rebeccapurple",
+					"armcolor": "crimson",
+					"delay": 4
+				},
+				{
+					"name": "Corruptor_1",
+					"tier": 3,
+					"description": "Releases electrical poisonous storm",
+					"atkspd": 6,
+					"atkdmg": 10,
+					"atkrng": 5,
+					"atktyp": 3,
+					"atktypsz": 900,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 6,
+					"facecolor": "hotpink",
+					"bodycolor": "gold",
+					"armcolor": "hotpink",
+					"delay": 0.1
+				},
+				{
+					"name": "Freezer_1",
+					"tier": 3,
+					"description": "Significantly slows enemy",
+					"atkspd": 4,
+					"atkdmg": 7,
+					"atkrng": 4,
+					"atktyp": 5,
+					"atktypsz": 0,
+					"knockback": 0,
+					"slowdown": 0.1,
+					"poison": 0,
+					"facecolor": "cyan",
+					"bodycolor": "dodgerblue",
+					"armcolor": "cyan",
+					"delay": 0.1
+				},
+				{
+					"name": "Detonator_1",
+					"tier": 4,
+					"description": "Detonates around itself",
+					"atkspd": 6,
+					"atkdmg": 20,
+					"atkrng": 2,
+					"atktyp": 0,
+					"atktypsz": 2,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "crimson",
+					"bodycolor": "cyan",
+					"armcolor": "crimson",
+					"delay": 0.1
+				},
+				{
+					"name": "Assassin_1",
+					"tier": 4,
+					"description": "Strikes and poisons target",
+					"atkspd": 5,
+					"atkdmg": 40,
+					"atkrng": 8,
+					"atktyp": 5,
+					"atktypsz": 0,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 10,
+					"facecolor": "hotpink",
+					"bodycolor": "dodgerblue",
+					"armcolor": "hotpink",
+					"delay": 0.1
+				},
+				{
+					"name": "Chronurgist_1",
+					"tier": 4,
+					"description": "Increases attack speed of allies",
+					"atkspd": 0,
+					"atkdmg": 1.2,
+					"atkrng": 3,
+					"atktyp": 9,
+					"atktypsz": 0,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"facecolor": "gold",
+					"bodycolor": "darkorange",
+					"armcolor": "gold",
+					"delay": 0.1
+				},
+				{
+					"name": "Mercenary_1",
+					"tier": 4,
+					"description": "Deals damage based on money",
+					"atkspd": 4,
+					"atkdmg": 1,
+					"atkrng": 4,
+					"atktyp": 2,
+					"atktypsz": 2,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"delay": 0,
+					"facecolor": "limegreen",
+					"bodycolor": "crimson",
+					"armcolor": "limegreen"
+				},
+				{
+					"name": "Jester_1",
+					"tier": 4,
+					"description": "Does nothing but counts as all types",
+					"atkspd": 0,
+					"atkdmg": 0,
+					"atkrng": 0,
+					"atktyp": 11,
+					"atktypsz": 0,
+					"knockback": 0,
+					"slowdown": 0,
+					"poison": 0,
+					"delay": 0,
+					"facecolor": "white",
+					"bodycolor": "white",
+					"armcolor": "white"
 				}
 			],
 			"separators": [],

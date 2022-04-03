@@ -8,6 +8,7 @@ var shop: Shop
 var tower_scene = preload("res://src/Tower.tscn")
 
 var circlemob_scene = preload("res://src/mobs/CircleMob.tscn")
+var bosscirclemob_scene = preload("res://src/mobs/BossCircleMob.tscn")
 var enemies_dict = {}
 
 # Member variables
@@ -90,6 +91,7 @@ func _ready():
 	$FastForwards/FFBtn.connect("pressed", self, "_on_ff_click")
 
 	enemies_dict["Circle"] = circlemob_scene
+	enemies_dict["BossCircle"] = bosscirclemob_scene
 
 func _on_bench_mouse_enter(i: int):
 	if !bench[i].empty():
@@ -153,7 +155,6 @@ func check_for_combines(name: String) -> bool:
 
 func _on_shop_buy(i: int):
 	if (shop.is_active()):
-		print("Trying to buy ", i)
 		# Buy and place in bench
 		if (shop_towers[i] != ""):
 			var cost = DB.towers.get(shop_towers[i] + "_1").tier
@@ -174,16 +175,13 @@ func _on_shop_buy(i: int):
 						shop.update_slot(i)
 						update_gold(-cost)
 						return
-				print("no spots left")
 			else:
-				print("not enough gold")
 				$GameInfo.flash_money()
 	
 func _on_refresh_btn():
 	if (shop.is_active()):
 		if gold > 0:
 			update_gold(-1)
-			print("refreshing")
 			generate_shop()
 			if shop.get_node("aninode/Lock").frame == 1:
 				shop.get_node("aninode/Lock").frame = 0
@@ -277,7 +275,6 @@ func _on_placement_click(event):
 			BUTTON_RIGHT:
 				is_place = false
 			_:
-				print("test",event.button_index)
 				return
 	else:
 		return
@@ -288,7 +285,6 @@ func _on_placement_click(event):
 			if (active_towers.size() >= level + 2):
 				$GameInfo.flash_wiz()
 				return
-			print("posn", posn, " | ", cur_carrying)
 			var twr = cur_carrying.split("_")
 			var node_name = "Tower_" + str(posn)
 			var ntower = tower_scene.instance()
@@ -343,7 +339,6 @@ func _on_active_click(node_name: String):
 		update_wiz_counts()
 
 func _on_trash_click():
-	print("trash", cur_carrying)
 	if (!cur_carrying.empty()):
 		update_gold(DB.towers.get(cur_carrying).tier)
 		clear_carrying()
@@ -374,14 +369,19 @@ func increment_level():
 	$LevelInfo.set_level(level)
 
 func update_max_xp():
-	$LevelInfo.set_max_xp(level * 10)
+	$LevelInfo.set_max_xp(min(Generator.MAX_LEVEL - 1, level) * 10)
 
 func increment_xp(val: int):
 	xp += val
-	if xp >= level * 10:
-		xp -= level * 10
+	if level >= Generator.MAX_LEVEL:
+		xp = (level - 1) * 10
+	elif xp >= level * 10:
 		increment_level()
-		update_max_xp()
+		if level < Generator.MAX_LEVEL:
+			xp -= (level - 1) * 10
+			update_max_xp()
+		else:
+			xp = (level - 1) * 10
 		update_wiz_counts()
 	$LevelInfo.set_cur_xp(xp)
 
@@ -399,22 +399,45 @@ func _on_ff_click():
 #	else:
 #		$Combat.hide()
 
-#TODO fix
-func get_wave(lvl: int):
-	return [["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2], ["Circle", 0.5], ["Circle", 0.2],["Circle", 0.5], ["Circle", 0]]
+func get_wave(wave: int):
+	if wave == 1:
+		return [["Circle", 0.5, 15, 100, 1], ["Circle", 0.8, 10, 100, 1], ["Circle", 0.6, 10, 100, 1], ["Circle", 1.2, 10, 100, 1], ["Circle", 0.5, 10, 100, 1], ["Circle", 0.2, 10, 100, 1],["Circle", 0.7, 10, 100, 1], ["Circle", 0, 10, 100, 1]]
+	elif wave == 2:
+		return [["Circle", 0.5, 15, 100, 1], ["Circle", 0.8, 15, 90, 1], ["Circle", 0.6, 15, 100, 1], ["Circle", 1.2, 15, 120, 1], ["Circle", 0.5, 15, 100, 1], ["Circle", 0.2, 15, 100, 1],["Circle", 0.7, 15, 90, 1], ["Circle", 0, 15, 80, 1], ["Circle", 1.2, 15, 100, 1], ["Circle", 0.5, 15, 100, 1], ["Circle", 0.2, 15, 120, 1],["Circle", 0.7, 15, 100, 1], ["Circle", 0, 15, 100, 1]]
+		
+	var wave_list = []
+	var num_batches = int(wave * 1.5) + 1
+	var batch_size = int(max(wave, 5.0) * 1.2)
+	
+	for i in num_batches:
+		var batch_diff = Generator.rng.randi() % 7 - 4
+		var this_batch_size = batch_size + batch_diff
+		for j in this_batch_size:
+			if (j == 0 && wave % 5 == 0 && i%3 == 0):
+				wave_list.append(["BossCircle", 0.5, 50 * ceil(wave / 5.0), 45, 5 * ceil(wave / 5.0)])
+			elif (j + 1 == this_batch_size && i + 1 == num_batches):
+				wave_list.append(["Circle", 0, 20 * ceil(wave / 5.0), 100, 1 * ceil(wave / 5.0)])
+			elif (j + 1 == this_batch_size):
+				wave_list.append(["Circle", 2, 20 * ceil(wave / 5.0), 100, 1 * ceil(wave / 5.0)])
+			else:
+				var speed_dif = Generator.rng.randi() % 50 - 25
+				var wait = (Generator.rng.randi() % 100 + 20) / 100.0
+				wave_list.append(["Circle", wait, 20 * ceil(wave / 5.0), 100 + speed_dif, 1 * ceil(wave / 5.0)])
+	return wave_list
 
 func spawn_wave():
 	spawning = true
-	var wave = get_wave(level)
-	for i in wave:
+	var wave_list = get_wave(wave)
+	for i in wave_list:
 		var mob = enemies_dict[i[0]].instance()
+		mob.set_vals(i[2],i[3],i[4])
 		mob.game = self
 		$EntitiesSort.add_child(mob)
 		active_enemies[mob.mob_id] = mob
 		var path_follow = PathFollow2D.new()
 		path_follow.rotate = false
 		path_follow.loop = false
-		path_follow.scale *= 0.1
+		path_follow.scale *= 0.1 * (100.0 / i[3])
 		var remote_trans = RemoteTransform2D.new()
 		remote_trans.remote_path = mob.get_path()
 		path_follow.add_child(remote_trans)
@@ -427,7 +450,7 @@ func spawn_wave():
 func destroy_mob(mob_id: int, damage_to_tower: int):
 	active_enemies.erase(mob_id)
 	health -= damage_to_tower
-	print(health)
+	$Fort/HealthBar.value = health
 	
 	if health <= 0:
 		print("DEAD")

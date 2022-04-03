@@ -25,7 +25,6 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	print("ready", owner_path)
 	# create the visuals
 	_visuals = visuals_res.instance()
 	add_child(_visuals)
@@ -59,7 +58,6 @@ func _process(delta: float) -> void:
 
 
 func _mouse_entered() -> void:
-	print("IN")
 	_timer.start(delay)
 
 
@@ -69,7 +67,6 @@ func _mouse_exited() -> void:
 
 
 func _custom_show() -> void:
-	print("TIMER")
 	_timer.stop()
 	if !owner_node.get_parent().get_value().empty():
 		_visuals.init_text(owner_node.get_parent().get_value(), str(owner_node.get_parent().get_level()))
@@ -92,5 +89,4 @@ func _get_screen_pos() -> Vector2:
 	return position
 
 func _on_Area2D_mouse_entered():
-	print("IN2")
 	_timer.start(delay)

@@ -14,6 +14,11 @@ var remote_position_node: PathFollow2D
 var health_bar: TextureProgress
 var game
 
+func set_vals(mh, s, td):
+	max_health = mh
+	speed = s
+	tower_dmg = td
+
 func set_defaults():
 	health = max_health
 	cur_speed = speed
@@ -27,17 +32,17 @@ func _process(delta):
 			on_destroy(tower_dmg)
 	
 
-func on_hit(damage: float = 0, knockback: float = 0, slowdown: float = 0, poison: float = 0):
+func on_hit(damage: float = 0, knockback: float = 0, slowdown: float = 0, poison: float = 0) -> bool:
 	health -= damage
 	health_bar.value = 100.0 * health / max_health
 	if (health <= 0):
 		on_destroy()
-		return
+		return true
 	if (knockback):
 		if remote_position_node:
 			remote_position_node.offset -= knockback
 	if (slowdown):
-		cur_speed /= slowdown
+		cur_speed *= slowdown
 		var tmr = Timer.new()
 		add_child(tmr)
 		tmr.connect("timeout", self, "_speed_up", [slowdown])
@@ -49,13 +54,14 @@ func on_hit(damage: float = 0, knockback: float = 0, slowdown: float = 0, poison
 		tmr.connect("timeout", self, "_deal_poison", [poison])
 		tmr.one_shot = true
 		tmr.start(1)
+	return false
 
 func _deal_poison(dmg: float):
 	flash_color(ColorN("hotpink"))
 	on_hit(dmg, 0, 0, dmg - 1)
 
 func _speed_up(v: float):
-	cur_speed = min(speed, cur_speed * v)
+	cur_speed = min(speed, cur_speed / v)
 
 func flash_color(c: Color):
 	pass

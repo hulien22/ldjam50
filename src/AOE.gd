@@ -10,11 +10,12 @@ var color: Color
 var knockback: float
 var slowdown: float
 var poison: float
+var tower
 
 var target: Vector2
 var source: Vector2
 
-func set_values(shp, dmg: float, sz: float, tgt: Vector2, src: Vector2, tmr_timeout: float, clr: Color, knk: float, slw: float, psn: float):
+func set_values(twr, shp, dmg: float, sz: float, tgt: Vector2, src: Vector2, tmr_timeout: float, clr: Color, knk: float, slw: float, psn: float):
 	shape = shp
 	damage = dmg
 	size = sz
@@ -25,17 +26,19 @@ func set_values(shp, dmg: float, sz: float, tgt: Vector2, src: Vector2, tmr_time
 	knockback = knk
 	slowdown = slw
 	poison = psn
+	tower = twr
 
 func _ready():
 	self.modulate = color
 	if color == Color(1, 0.84, 0, 1):  # nice lightning effect
 		$AnimNode.modulate.a = 0.5
+	elif timer_timeout >= 1:
+		$AnimNode.modulate.a = 0.1
 	$AnimNode.modulate.a
 	match shape:
 		DB.towers.Atktyp.SINGLE_TARGET:
 			#TODO figure out scaling issues here
 			$AnimNode/Narrow.scale.x *= abs(target.distance_to(source)) / 0.36
-			print(target, source, target.distance_to(source))
 			$AnimNode/Narrow.look_at(target)
 			global_position = (target + source) / 2.0
 			$AnimNode/Narrow.show()
@@ -71,13 +74,12 @@ func _ready():
 			$DetectArea.add_child(col_shp)
 		DB.towers.Atktyp.LINE:
 			var detect_rect = RectangleShape2D.new()
-			detect_rect.extents = Vector2(1,125) * size
+			detect_rect.extents = Vector2(1 * size, 125)
 			var col_shp = CollisionShape2D.new()
 			col_shp.shape = detect_rect
 			col_shp.position.x = size
 			$DetectArea.add_child(col_shp)
 			$AnimNode/Line.scale.x *= size
-			print($AnimNode/Line.scale)
 			global_position = source
 			look_at(target)
 			$AnimNode/Line.show()
@@ -88,9 +90,11 @@ func _ready():
 
 func deal_damage():
 	var nodes = $DetectArea.get_overlapping_areas()
-	print(nodes)
 	for n in nodes:
-		n.get_parent().on_hit(damage, knockback, slowdown, poison)
+		if n.get_parent().on_hit(damage, knockback, slowdown, poison):
+			# on kill
+			tower.on_kill()
+		
 	$DetectArea.hide()
 
 func _on_AnimationPlayer_animation_finished(anim_name):

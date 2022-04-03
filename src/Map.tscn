@@ -13,7 +13,7 @@
 [ext_resource path="res://src/Shop_DropDown.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/Game.gd" type="Script" id=12]
 [ext_resource path="res://src/FollowNode.tscn" type="PackedScene" id=13]
-[ext_resource path="res://art/fort.png" type="Texture" id=14]
+[ext_resource path="res://src/Fort.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/Trash.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/Play.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/Path.tscn" type="PackedScene" id=17]
@@ -75,10 +75,9 @@ position = Vector2( 574, -736 )
 
 [node name="Path" parent="." instance=ExtResource( 17 )]
 
-[node name="Fort" type="Sprite" parent="."]
+[node name="Fort" parent="." instance=ExtResource( 14 )]
 position = Vector2( 227, 112 )
-scale = Vector2( 0.194237, 0.194237 )
-texture = ExtResource( 14 )
+scale = Vector2( 0.194, 0.194 )
 
 [node name="EntitiesSort" type="YSort" parent="."]
 
