@@ -36,7 +36,7 @@ func _ready():
 	increment_xp(0)
 	update_max_xp()
 	
-	Global.tower_label = $TowerLabel
+	Global.tower_label = $TowerLabelNode/TowerLabel
 	
 	# Create shop
 	shop = shop_scene.instance()
@@ -57,13 +57,29 @@ func _ready():
 	# Create bench
 	# lil' bit of hardcoding
 	$Bench/Slot1/Slot1Btn.connect("pressed", self, "_on_bench_click", [0])
+	$Bench/Slot1/Slot1Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [0])
+	$Bench/Slot1/Slot1Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [0])
 	$Bench/Slot2/Slot2Btn.connect("pressed", self, "_on_bench_click", [1])
+	$Bench/Slot2/Slot2Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [1])
+	$Bench/Slot2/Slot2Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [1])
 	$Bench/Slot3/Slot3Btn.connect("pressed", self, "_on_bench_click", [2])
+	$Bench/Slot3/Slot3Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [2])
+	$Bench/Slot3/Slot3Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [2])
 	$Bench/Slot4/Slot4Btn.connect("pressed", self, "_on_bench_click", [3])
+	$Bench/Slot4/Slot4Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [3])
+	$Bench/Slot4/Slot4Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [3])
 	$Bench/Slot5/Slot5Btn.connect("pressed", self, "_on_bench_click", [4])
+	$Bench/Slot5/Slot5Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [4])
+	$Bench/Slot5/Slot5Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [4])
 	$Bench/Slot6/Slot6Btn.connect("pressed", self, "_on_bench_click", [5])
+	$Bench/Slot6/Slot6Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [5])
+	$Bench/Slot6/Slot6Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [5])
 	$Bench/Slot7/Slot7Btn.connect("pressed", self, "_on_bench_click", [6])
+	$Bench/Slot7/Slot7Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [6])
+	$Bench/Slot7/Slot7Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [6])
 	$Bench/Slot8/Slot8Btn.connect("pressed", self, "_on_bench_click", [7])
+	$Bench/Slot8/Slot8Btn.connect("mouse_entered", self, "_on_bench_mouse_enter", [7])
+	$Bench/Slot8/Slot8Btn.connect("mouse_exited", self, "_on_bench_mouse_exit", [7])
 	$Trash/Trash/TrashBtn.connect("pressed", self, "_on_trash_click")
 	
 	$FollowNode/PlaceBtn.connect("gui_input", self, "_on_placement_click")
@@ -74,6 +90,15 @@ func _ready():
 	$FastForwards/FFBtn.connect("pressed", self, "_on_ff_click")
 
 	enemies_dict["Circle"] = circlemob_scene
+
+func _on_bench_mouse_enter(i: int):
+	if !bench[i].empty():
+		var twr = bench[i].split("_")
+		Global.tower_label.init_text(twr[0], twr[1])
+		Global.show_tower_label(false)
+
+func _on_bench_mouse_exit(i: int):
+	Global.tower_label.hide()
 
 func combine_towers(active_nodes: Array, bench_nodes: Array, level: int) -> bool:
 	if active_nodes.size() + bench_nodes.size() != level:
@@ -303,6 +328,7 @@ func _on_placement_click(event):
 
 func _on_active_click(node_name: String):
 	if (Global.game_state == GLOBAL.GAME_STATE.PREPARING):
+		Global.tower_label.hide()
 		var old_posn = active_towers[node_name].position
 		cur_carrying = active_towers[node_name].name_ + "_" + str(active_towers[node_name].level_)
 		last_location = "ACTIVE_" + str(old_posn)

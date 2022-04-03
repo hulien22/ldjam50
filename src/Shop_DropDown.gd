@@ -58,7 +58,7 @@ func update_slot(i: int, name: String = "", tier: int = 0):
 func _on_btn_mouse_entered(i: int):
 	if !slots[i].get_value().empty():
 		Global.tower_label.init_text(slots[i].get_value(), str(slots[i].get_level()))
-		Global.tower_label.show()
+		Global.show_tower_label(false)
 
 
 func _on_btn_mouse_exited():

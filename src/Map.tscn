@@ -142,8 +142,9 @@ scale = Vector2( 0.55, 0.55 )
 visible = false
 position = Vector2( 580, -1134 )
 
-[node name="TowerLabel" parent="." instance=ExtResource( 21 )]
-margin_left = 780.0
-margin_top = 3.0
-margin_right = 780.0
-margin_bottom = 3.0
+[node name="TowerLabelNode" type="Node2D" parent="."]
+position = Vector2( 0, 197 )
+z_index = 999
+
+[node name="TowerLabel" parent="TowerLabelNode" instance=ExtResource( 21 )]
+visible = false

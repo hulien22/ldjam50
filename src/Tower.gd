@@ -127,6 +127,9 @@ func _on_SelectBtn_mouse_entered():
 	update_stats()
 	$Whitecircle.scale = Vector2(1,1) * atkrng
 	$Whitecircle.show()
+	Global.tower_label.init_text(name_, str(level_))
+	Global.show_tower_label(global_position.x > 612)
 
 func _on_SelectBtn_mouse_exited():
 	$Whitecircle.hide()
+	Global.tower_label.hide()
