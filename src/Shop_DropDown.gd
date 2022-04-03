@@ -54,3 +54,12 @@ func update_slot(i: int, name: String = "", tier: int = 0):
 	slots[i].update_entry(name, 1, tier)
 	#TODO add tier to value here
 
+
+func _on_btn_mouse_entered(i: int):
+	if !slots[i].get_value().empty():
+		Global.tower_label.init_text(slots[i].get_value(), str(slots[i].get_level()))
+		Global.tower_label.show()
+
+
+func _on_btn_mouse_exited():
+	Global.tower_label.hide()

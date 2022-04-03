@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/SketchFontLabel.tres" type="Theme" id=1]
+[ext_resource path="res://SketchMeFreeVersion-qxyl.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/TowerLabel.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://SketchMeFreeVersion-qxyl.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.12549, 0.12549, 0.12549, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="TowerLabel" type="Control"]
+script = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 238.0
+margin_bottom = 39.0
+theme = ExtResource( 1 )
+custom_fonts/bold_italics_font = SubResource( 2 )
+custom_fonts/italics_font = SubResource( 3 )
+custom_fonts/bold_font = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "Evoker"
+text = "Evoker"
+fit_content_height = true
+scroll_active = false

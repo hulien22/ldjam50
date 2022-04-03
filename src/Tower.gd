@@ -75,22 +75,14 @@ func shoot(target: Mob):
 	print("shoot!", target)
 	# This is it, the big boi
 	match row_.atktyp:
-		DB.towers.Atktyp.CIRCLE:
-			print("circle")
-			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
-			call_deferred("add_child", aoe)
-		DB.towers.Atktyp.LINE:
-			print("line")
-			var aoe = aoe_scene.instance()
-			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
-			call_deferred("add_child", aoe)
-		DB.towers.Atktyp.SELF_CIRCLE:
-			print("self_circle")
 		DB.towers.Atktyp.SINGLE_TARGET:
-			print("single_target")
 			# Just deal damage directly for single target
 			var aoe = aoe_scene.instance()
 			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0, ColorN(row_.facecolor), self.global_position)
 			call_deferred("add_child", aoe)
 			target.on_hit(row_.atkdmg)
+		_:
+			var aoe = aoe_scene.instance()
+			aoe.set_values(row_.atktyp, row_.atkdmg, row_.atktypsz, target.global_position, 0.1, ColorN(row_.facecolor), self.global_position)
+			call_deferred("add_child", aoe)
+	

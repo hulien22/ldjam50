@@ -36,6 +36,8 @@ func _ready():
 	increment_xp(0)
 	update_max_xp()
 	
+	Global.tower_label = $TowerLabel
+	
 	# Create shop
 	shop = shop_scene.instance()
 	shop.set_name("Shop")
@@ -69,6 +71,7 @@ func _ready():
 	
 	Global.game_state = GLOBAL.GAME_STATE.PREPARING
 	$Play/PlayBtn.connect("pressed", self, "_on_play_click")
+	$FastForwards/FFBtn.connect("pressed", self, "_on_ff_click")
 
 	enemies_dict["Circle"] = circlemob_scene
 
@@ -348,6 +351,14 @@ func increment_xp(val: int):
 		update_wiz_counts()
 	$LevelInfo.set_cur_xp(xp)
 
+func _on_ff_click():
+	if Engine.get_time_scale() == 2.0:
+		Engine.set_time_scale(1.0)
+		$FastForwards.modulate = Color(1,1,1,1)
+	else:
+		Engine.set_time_scale(2.0)
+		$FastForwards.modulate = Color(0.83,0.83,0.83,1)
+
 #func _process(delta):
 #	if (Global.game_state == GLOBAL.GAME_STATE.COMBAT):
 #		$Combat.show()
@@ -398,6 +409,7 @@ func start_round():
 	Global.game_state = Global.GAME_STATE.COMBAT
 	shop.pullback()
 	$Play.hide()
+	$FastForwards.show()
 	for t in active_towers:
 		active_towers[t].start_combat()
 	spawn_wave()
@@ -412,6 +424,7 @@ func end_round():
 	# gain xp
 	increment_xp(4)
 	increment_wave()
+	$FastForwards.hide()
 	$Play.show()
 	for t in active_towers:
 		active_towers[t].stop_combat()
