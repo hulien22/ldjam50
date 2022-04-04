@@ -194,7 +194,7 @@ func _on_lock_btn():
 			shop.get_node("aninode/Lock").frame = 1
 		else:
 			shop.get_node("aninode/Lock").frame = 0
-		update_gold(10)
+#		update_gold(10)
 
 func _on_upgrade_btn():
 	if (shop.is_active()):
@@ -503,12 +503,12 @@ func get_active_properties():
 		if (counts.has(c1)):
 			counts[c1] += 1
 		else:
-			counts[c1] += 1
+			counts[c1] = 1
 		if (c1 != c2):
 			if (counts.has(c2)):
 				counts[c2] += 1
 			else:
-				counts[c2] += 1
+				counts[c2] = 1
 	if (counts.has("white")):
 		for k in counts:
 			counts[k] += 1
