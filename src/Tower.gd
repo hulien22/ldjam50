@@ -96,15 +96,16 @@ func shoot(target: Mob, goldshots: int = 0):
 			if target.on_hit(row_.atkdmg, knockback, slowdown, poison):
 				on_kill()
 		_:  # else send the damage 
+			var oldatkdmg = atkdmg
 			if name_ == "Mercenary":
-				atkdmg = game.gold
-				
+				atkdmg *= game.gold
 			if row_.facecolor == "dodgerblue" || row_.bodycolor == "dodgerblue":
 				if Generator.rng.randi() % 100 < Global.crit_chance:
 					atkdmg *= 3.0
 			
 			var aoe = aoe_scene.instance()
 			aoe.set_values(self, row_.atktyp, atkdmg, atktypsz, target.global_position, self.global_position, row_.delay, ColorN(row_.facecolor), knockback, slowdown, poison)
+			atkdmg = oldatkdmg
 			call_deferred("add_child", aoe)
 	
 	if row_.facecolor == "gold" || row_.bodycolor == "gold":

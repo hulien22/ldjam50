@@ -63,7 +63,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ldjam 50"
-run/main_scene="res://src/Map.tscn"
+run/main_scene="res://src/Menu.tscn"
 boot_splash/image="res://art/defaulbgbig.png"
 config/icon="res://icon.png"
 

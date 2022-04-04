@@ -13,8 +13,8 @@ var enemies_dict = {}
 
 # Member variables
 var xp: int = 0
-var level: int = 0
-var gold: int = 0
+var level: int = 6
+var gold: int = 100
 var health: int = 100
 var wave: int = 0
 var bench: Array = ["", "", "", "", "", "", "", ""]
@@ -92,6 +92,9 @@ func _ready():
 
 	enemies_dict["Circle"] = circlemob_scene
 	enemies_dict["BossCircle"] = bosscirclemob_scene
+	
+	yield(get_tree().create_timer(0.3), "timeout")
+	shop.dropdown()
 
 func _on_bench_mouse_enter(i: int):
 	if !bench[i].empty():

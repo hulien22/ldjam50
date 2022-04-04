@@ -1056,7 +1056,7 @@
 					"knockback": 0,
 					"slowdown": 0,
 					"poison": 0,
-					"delay": 0,
+					"delay": 0.1,
 					"facecolor": "limegreen",
 					"bodycolor": "crimson",
 					"armcolor": "limegreen"
@@ -1073,7 +1073,7 @@
 					"knockback": 0,
 					"slowdown": 0,
 					"poison": 0,
-					"delay": 0,
+					"delay": 0.1,
 					"facecolor": "limegreen",
 					"bodycolor": "crimson",
 					"armcolor": "limegreen"
@@ -1090,7 +1090,7 @@
 					"knockback": 0,
 					"slowdown": 0,
 					"poison": 0,
-					"delay": 0,
+					"delay": 0.1,
 					"facecolor": "limegreen",
 					"bodycolor": "crimson",
 					"armcolor": "limegreen"
