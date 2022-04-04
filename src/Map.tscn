@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://art/temp_map.png" type="Texture" id=1]
 [ext_resource path="res://art/board.png" type="Texture" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://src/LevelInfo.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/FastForwards.tscn" type="PackedScene" id=20]
 [ext_resource path="res://src/TowerLabel.tscn" type="PackedScene" id=21]
+[ext_resource path="res://src/GameOver.tscn" type="PackedScene" id=22]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 12 )
@@ -147,3 +148,10 @@ z_index = 999
 
 [node name="TowerLabel" parent="TowerLabelNode" instance=ExtResource( 21 )]
 visible = false
+
+[node name="GameOver" parent="." instance=ExtResource( 22 )]
+visible = false
+position = Vector2( 237, 175 )
+rotation = -0.0430754
+scale = Vector2( 0.555419, 0.555419 )
+z_index = 4096

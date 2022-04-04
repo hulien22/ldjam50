@@ -69,7 +69,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Generator="*res://Generator.gd"
+Generator="*res://src/Generator.gd"
 DB="*res://db/DB.cdb"
 Global="*res://src/Global.gd"
 

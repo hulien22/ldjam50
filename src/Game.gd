@@ -13,8 +13,8 @@ var enemies_dict = {}
 
 # Member variables
 var xp: int = 0
-var level: int = 6
-var gold: int = 100
+var level: int = 0
+var gold: int = 0
 var health: int = 100
 var wave: int = 0
 var bench: Array = ["", "", "", "", "", "", "", ""]
@@ -456,8 +456,8 @@ func destroy_mob(mob_id: int, damage_to_tower: int):
 	$Fort/HealthBar.value = health
 	
 	if health <= 0:
-		print("DEAD")
-		#TODO
+		get_tree().paused = true
+		$GameOver.show()
 	
 	if active_enemies.empty() && !spawning:
 		end_round()
